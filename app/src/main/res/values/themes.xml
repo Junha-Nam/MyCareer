@@ -1,0 +1,4 @@
+<resources>
+
+    <style name="Theme.MyFinancialDash" parent="@style/Theme.Leanback" />
+</resources>
