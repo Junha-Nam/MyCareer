@@ -1,6 +1,8 @@
 package com.example.myfinancialdash.api
 
+import com.example.myfinancialdash.data.crypto.Crypto
 import com.example.myfinancialdash.data.cryptochart.CryptoChart
+import com.example.myfinancialdash.data.cryptosearch.CryptoSearch
 import com.example.myfinancialdash.data.korstock.KorStock
 import com.example.myfinancialdash.utils.KorStockConstants.Companion.API_KEY_KOR_STOCK
 import retrofit2.Call
@@ -23,8 +25,13 @@ interface CryptoAPI {
 
     //두번째 엔드포인트는 everything을 써주었습니다. 위 방식과 동일합니다.
     @GET("ticker")
-    suspend fun searchForNews(
+    suspend fun getCryptoDetail(
         @Query("market") //parameter를 넣어줍니다.
         market:String = "KRW-BTC"
-    ):Response<CryptoChart>
+    ):Response<Crypto>
+
+    @GET("market/all")
+    suspend fun getCryptoSearch(
+    ):Response<CryptoSearch>
+
 }

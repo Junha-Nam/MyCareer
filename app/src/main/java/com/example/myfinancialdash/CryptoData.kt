@@ -1,4 +1,5 @@
 package com.example.myfinancialdash
 
-class CryptoData {
+class CryptoFunction {
+
 }
