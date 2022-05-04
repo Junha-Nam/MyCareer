@@ -1,13 +1,13 @@
 
 package com.example.myfinancialdash
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
+import com.example.myfinancialdash.api.RetrofitInstance
 import com.example.myfinancialdash.databinding.ActivityMainBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 
 class MainActivity : FragmentActivity() {
@@ -15,6 +15,7 @@ class MainActivity : FragmentActivity() {
     val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(binding.root )
 
@@ -32,8 +33,25 @@ class MainActivity : FragmentActivity() {
 
 
         //
-        CoroutineScope(Dispatchers.IO).launch {
+
+
+
+        val job = CoroutineScope(Dispatchers.IO).launch {
             try {
+                val retrofitTest = RetrofitInstance
+
+                for(i in 1..1000) {
+
+                    delay(1000)
+                    println("test "+i.toString())
+
+
+//                    val callTest = retrofitTest.api.getCryptoChart("KRW-BTC", 1)
+//                    val test = callTest.body()
+//                    println(test?.get(0)?.candle_date_time_kst.toString())
+
+                }
+
 
 
             } catch(e:Exception) {
@@ -93,8 +111,15 @@ class MainActivity : FragmentActivity() {
 
         // crypto로 화면전환
         binding.buttonCrypto.setOnClickListener{
+            job.cancel()
             val nextIntent = Intent(this, CryptoActivity::class.java)
             startActivity(nextIntent)
+            println("넘어가도 동작해?")
+            finish()
+            println("stop이후도 동작해?")
+
+
+
         }
 
         // 권한 승인에 관한 내용..

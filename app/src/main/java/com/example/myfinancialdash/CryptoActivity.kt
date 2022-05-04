@@ -14,9 +14,12 @@ class CryptoActivity : FragmentActivity() {
         setContentView(binding.root )
 
 
+
+
         binding.buttonStock.setOnClickListener{
             val nextIntent = Intent(this, MainActivity::class.java)
             startActivity(nextIntent)
+
         }
     }
 }
