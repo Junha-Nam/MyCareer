@@ -1,0 +1,32 @@
+package com.example.myfinancialdash.data.index
+
+data class Bond10YTItem(
+    val calendars: Any,
+    val categoryType: String,
+    val chartIqEndUrl: Any,
+    val closePrice: String,
+    val degreeCount: Any,
+    val delayTime: Int,
+    val delayTimeName: String,
+    val description: Any,
+    val endUrl: String,
+    val fluctuations: String,
+    val fluctuationsRatio: String,
+    val fluctuationsType: FluctuationsType,
+    val fullName: Any,
+    val imageCharts: Any,
+    val localTradedAt: String,
+    val marketIndexTotalInfos: Any,
+    val marketStatus: String,
+    val month: String,
+    val name: String,
+    val nameEng: Any,
+    val nationType: String,
+    val priceDataType: String,
+    val reutersCode: String,
+    val scriptChartTypes: Any,
+    val statementSource: String,
+    val stockExchangeType: Any,
+    val symbolCode: Any,
+    val unit: Any
+)

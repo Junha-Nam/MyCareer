@@ -1,4 +1,4 @@
-package com.example.myfinancialdash.korstock
+package com.example.myfinancialdash.data.korstock
 
 data class KorStock(
     val msg1: String,

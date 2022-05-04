@@ -1,4 +1,4 @@
-package com.example.myfinancialdash.crypto
+package com.example.myfinancialdash.data.crypto
 
 data class CryptoItem(
     val acc_trade_price: Double,

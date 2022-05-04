@@ -1,4 +1,4 @@
-package com.example.myfinancialdash.korstock
+package com.example.myfinancialdash.data.korstock
 
 data class Output(
     val acml_tr_pbmn: String,
