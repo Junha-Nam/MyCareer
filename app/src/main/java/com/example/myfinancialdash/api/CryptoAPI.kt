@@ -26,8 +26,8 @@ interface CryptoAPI {
     //두번째 엔드포인트는 everything을 써주었습니다. 위 방식과 동일합니다.
     @GET("ticker")
     suspend fun getCryptoDetail(
-        @Query("market") //parameter를 넣어줍니다.
-        market:String = "KRW-BTC"
+        @Query("markets") //parameter를 넣어줍니다.
+        markets:String = "KRW-BTC"
     ):Response<Crypto>
 
     @GET("market/all")
