@@ -44,45 +44,6 @@ class MainActivity : FragmentActivity() {
         val retrofitDashboard = RetrofitInstance_IndexStock
         jobDashboard = CoroutineScope(Dispatchers.IO).launch {
             try {
-                while(true){
-                    // 값을 가져오고
-                    val cryptoKorBit = retrofitDashboard.api.getCryptoDetail("KRW-BTC")
-                    val cryptoUsdBit = retrofitDashboard.api.getCryptoDetail("USDT-BTC")
-                    val cryptoKorEth = retrofitDashboard.api.getCryptoDetail("KRW-ETH")
-                    val cryptoUsdEth = retrofitDashboard.api.getCryptoDetail("USDT-ETH")
-                    val cryptoKorDog = retrofitDashboard.api.getCryptoDetail("KRW-DOGE")
-                    val cryptoUsdDog = retrofitDashboard.api.getCryptoDetail("USDT-DOGE")
-
-                    //Body를 저장해서
-                    val cryptoKorBitBody = cryptoKorBit.body()
-                    val cryptoUsdBitBody = cryptoUsdBit.body()
-                    val cryptoKorEthBody = cryptoKorEth.body()
-                    val cryptoUsdEthBody = cryptoUsdEth.body()
-                    val cryptoKorDogBody = cryptoKorDog.body()
-                    val cryptoUsdDogBody = cryptoUsdDog.body()
-
-                    //price와 rate를 뿌려준다.
-//                    binding.krwBtcPrice.text = cryptoKorBitBody?.get(0)?.trade_price.toString()
-//                    binding.krwBtcRate.text = cryptoKorBitBody?.get(0)?.signed_change_rate.toString()
-//                    binding.krwEthPrice.text = cryptoKorEthBody?.get(0)?.trade_price.toString()
-//                    binding.krwEthRate.text = cryptoKorEthBody?.get(0)?.signed_change_rate.toString()
-//                    binding.krwDogPrice.text = cryptoKorDogBody?.get(0)?.trade_price.toString()
-//                    binding.krwDogRate.text = cryptoKorDogBody?.get(0)?.signed_change_rate.toString()
-//
-//                    binding.usdBtcPrice.text = cryptoUsdBitBody?.get(0)?.trade_price.toString()
-//                    binding.usdBtcRate.text = cryptoUsdBitBody?.get(0)?.signed_change_rate.toString()
-//                    binding.usdEthPrice.text = cryptoUsdEthBody?.get(0)?.trade_price.toString()
-//                    binding.usdEthRate.text = cryptoUsdEthBody?.get(0)?.signed_change_rate.toString()
-//                    binding.usdDogPrice.text = cryptoUsdDogBody?.get(0)?.trade_price.toString()
-//                    binding.usdDogRate.text = cryptoUsdDogBody?.get(0)?.signed_change_rate.toString()
-//
-//                    countTest += 1
-//                    binding.loopTest.text = countTest.toString()
-
-                    //CryptoData().cryptoIndex(retrofitDashboard)
-
-                    delay(3000)
-                }
 
 
             } catch(e:Exception) {
