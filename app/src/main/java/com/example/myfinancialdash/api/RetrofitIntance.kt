@@ -6,7 +6,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class RetrofitInstance() {
+class RetrofitInstance_Crypto() {
 
     companion object{
         private val retrofit by lazy{
@@ -15,6 +15,8 @@ class RetrofitInstance() {
             logging.setLevel(HttpLoggingInterceptor.Level.BODY)
 
             //클라이언트 생성
+
+
             val client = OkHttpClient.Builder()
                 .addInterceptor(logging)
                 .build()

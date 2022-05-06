@@ -5,7 +5,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
-import com.example.myfinancialdash.api.RetrofitInstance
+//import com.example.myfinancialdash.api.RetrofitInstance
 import com.example.myfinancialdash.databinding.ActivityMainBinding
 import kotlinx.coroutines.*
 
@@ -38,7 +38,7 @@ class MainActivity : FragmentActivity() {
 
         val job = CoroutineScope(Dispatchers.IO).launch {
             try {
-                val retrofitTest = RetrofitInstance
+                //val retrofitTest = RetrofitInstance
 
                 for(i in 1..1000) {
 

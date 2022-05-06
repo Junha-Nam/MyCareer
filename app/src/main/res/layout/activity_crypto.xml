@@ -15,13 +15,15 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:orientation="horizontal">
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:layout_marginBottom="20dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="StockDashboard">
+            android:text="CryptoDashboard"
+            android:textColor="#000000">
 
         </TextView>
 
@@ -47,49 +49,173 @@
             android:layout_height="match_parent"
             android:background="#331252"
             android:layout_weight="1"
+            android:weightSum="10"
             android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="RecyclerView">
-
-            </TextView>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:weightSum="8">
 
                 <EditText
-                    android:layout_width="381dp"
-                    android:layout_height="56dp">
-
+                    android:inputType="text"
+                    android:id="@+id/edit_crypto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="7">
 
                 </EditText>
 
                 <Button
                     android:id="@+id/search_crpyto"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:text="Button" />
 
             </LinearLayout>
-            <com.github.mikephil.charting.charts.BarChart
-                android:id="@+id/fragment_bluetooth_chat_barchart"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp" />
 
-            <TableLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TableRow>
-                    <TextView></TextView>
-                </TableRow>
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:weightSum="5"
+                android:orientation="horizontal">
 
-            </TableLayout>
+                <TextView
+                    android:id="@+id/crypto_name"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="시가"
+                    android:gravity="center"
+                    android:padding="3dp"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    android:id="@+id/crypto_price"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="시가"
+                    android:gravity="center"
+                    android:padding="3dp"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    android:id="@+id/crypto_percent"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="시가"
+                    android:gravity="center"
+                    android:padding="3dp"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:padding="3dp"
+                    android:layout_weight="2"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4">
+                <com.github.mikephil.charting.charts.CandleStickChart
+                    android:id="@+id/priceChart"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="3">
+                <TableLayout
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:stretchColumns="0,1,2,3">
+                    <TableRow>
+                        <TextView
+                            android:text="시가"
+                            android:gravity="left"
+                            android:padding="3dp" />
+                        <TextView
+                            android:id="@+id/opening_price"
+                            android:gravity="left"
+                            android:padding="3dp" />
+                        <TextView
+                            android:text="52주 신고가 달성일"
+                            android:gravity="left"
+                            android:padding="3dp" />
+                        <TextView
+                            android:id="@+id/highest_52_date"
+                            android:gravity="left"
+                            android:padding="3dp" />
+                    </TableRow>
+
+                    <TableRow>
+                        <TextView
+                            android:text="고가"
+                            android:gravity="left"
+                            android:padding="3dip" />
+                        <TextView
+                            android:id="@+id/high_price"
+                            android:gravity="left"
+                            android:padding="3dip" />
+                        <TextView
+                            android:text="52주 신고가"
+                            android:gravity="left"
+                            android:padding="3dip" />
+                        <TextView
+                            android:id="@+id/highest_52_price"
+                            android:gravity="left"
+                            android:padding="3dip" />
+                    </TableRow>
+                    <TableRow>
+                        <TextView
+                            android:text="저가"
+                            android:gravity="left"
+                            android:padding="3dip" />
+                        <TextView
+                            android:id="@+id/low_price"
+                            android:gravity="left"
+                            android:padding="3dip" />
+                        <TextView
+                            android:text="52주 신저가 달성일"
+                           android:gravity="left"
+                            android:padding="3dip" />
+                        <TextView
+                            android:id="@+id/lowest_52_date"
+                            android:gravity="left"
+                            android:padding="3dip" />
+                    </TableRow>
+                    <TableRow>
+                        <TextView
+                            android:text="전일종가"
+                            android:gravity="left"
+                            android:padding="3dip" />
+                        <TextView
+                            android:id="@+id/prev_price"
+                            android:gravity="left"
+                            android:padding="3dip" />
+                        <TextView
+                            android:text="52주 신저가"
+                            android:gravity="left"
+                            android:padding="3dip" />
+                        <TextView
+                            android:id="@+id/lowest_52_price"
+                            android:gravity="left"
+                            android:padding="3dip" />
+                    </TableRow>
+                </TableLayout>
+            </LinearLayout>
 
 
 
@@ -98,39 +224,281 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
+            android:weightSum="3"
+            android:layout_margin="10dp"
             android:layout_weight="1">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="225dp"
+                android:weightSum="3"
+                android:layout_weight="1"
+                android:layout_margin="10dp"
                 >
 
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:background="@drawable/index_status"
                     android:textColor="#ffffff"
-                    android:text="testing" />
+                    android:text="testing"
+                    android:layout_weight="1"
+                    android:layout_margin="4dp"
+                    android:weightSum="6"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/index_status"
-                    android:textColor="#ffffff"
-                    android:text="testing" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="비트코인(한국)"
+                        android:gravity="center"
+                        android:layout_weight="1"/>
 
-                <TextView
+                    <TextView
+                        android:id="@+id/krw_btc_price"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_weight="4"/>
+
+                    <TextView
+                        android:id="@+id/krw_btc_rate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_weight="1"/>
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:background="@drawable/index_status"
                     android:textColor="#ffffff"
-                    android:text="testing" />
+                    android:text="testing"
+                    android:layout_weight="1"
+                    android:layout_margin="4dp"
+                    android:weightSum="6"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="이더리움(한국)"
+                        android:gravity="center"
+                        android:layout_weight="1"/>
+
+                    <TextView
+                        android:id="@+id/krw_eth_price"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_weight="4"/>
+
+                    <TextView
+                        android:id="@+id/krw_eth_rate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_weight="1"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/index_status"
+                    android:textColor="#ffffff"
+                    android:text="testing"
+                    android:layout_weight="1"
+                    android:layout_margin="4dp"
+                    android:weightSum="6"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="도지코인(한국)"
+                        android:gravity="center"
+                        android:layout_weight="1"/>
+
+                    <TextView
+                        android:id="@+id/krw_dog_price"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_weight="4"/>
+
+                    <TextView
+                        android:id="@+id/krw_dog_rate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_weight="1"/>
+                </LinearLayout>
 
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="225dp"
-                android:background="#5542ff">
+                android:layout_weight="1"
+                android:weightSum="3"
+                android:layout_margin="10dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/index_status"
+                    android:textColor="#ffffff"
+                    android:layout_weight="1"
+                    android:layout_margin="4dp"
+                    android:weightSum="6"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="비트코인(미국)"
+                        android:gravity="center"
+                        android:layout_weight="1"/>
+
+                    <TextView
+                        android:id="@+id/usd_btc_price"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_weight="4"/>
+
+                    <TextView
+                        android:id="@+id/usd_btc_rate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_weight="1"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/index_status"
+                    android:textColor="#ffffff"
+                    android:text="testing"
+                    android:layout_weight="1"
+                    android:layout_margin="4dp"
+                    android:weightSum="6"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="이더리움(미국)"
+                        android:gravity="center"
+                        android:layout_weight="1"/>
+
+                    <TextView
+                        android:id="@+id/usd_eth_price"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_weight="4"/>
+
+                    <TextView
+                        android:id="@+id/usd_eth_rate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_weight="1"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/index_status"
+                    android:textColor="#ffffff"
+                    android:text="testing"
+                    android:layout_weight="1"
+                    android:layout_margin="4dp"
+                    android:weightSum="6"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="도지코인(미국)"
+                        android:gravity="center"
+                        android:layout_weight="1"/>
+
+                    <TextView
+                        android:id="@+id/usd_dog_price"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_weight="4"/>
+
+                    <TextView
+                        android:id="@+id/usd_dog_rate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_weight="1"/>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="225dp"
+                android:layout_weight="1"
+                android:weightSum="3"
+                android:layout_margin="10dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/index_status"
+                    android:textColor="#ffffff"
+                    android:text="testing"
+                    android:layout_weight="1"
+                    android:layout_margin="4dp">
+
+                    <TextView
+                        android:id="@+id/loopTest"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_weight="1"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/index_status"
+                    android:textColor="#ffffff"
+                    android:text="testing"
+                    android:layout_weight="1"
+                    android:layout_margin="4dp">
+
+                    <TextView
+                        android:id="@+id/loopTest2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_weight="1"/>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/index_status"
+                    android:textColor="#ffffff"
+                    android:text="testing"
+                    android:layout_weight="1"
+                    android:layout_margin="4dp"/>
 
             </LinearLayout>
         </LinearLayout>
