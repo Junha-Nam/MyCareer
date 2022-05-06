@@ -7,7 +7,6 @@ import androidx.fragment.app.FragmentActivity
 import android.os.Bundle
 import com.example.myfinancialdash.api.RetrofitInstance_Crypto
 import com.example.myfinancialdash.data.cryptochart.CryptoChart
-import com.example.myfinancialdash.data.cryptochart.CryptoChartItem
 import com.example.myfinancialdash.databinding.ActivityCryptoBinding
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
@@ -29,13 +28,11 @@ class CryptoActivity : FragmentActivity() {
 
         
         // 여기는 우측 대시보드. 즉, 실시간으로 계속 새로고침? 갱신 이 되어야 하는 곳이야. 
-
+        var countTest = 0
+        val retrofitDashboard = RetrofitInstance_Crypto
         jobDashboard = CoroutineScope(Dispatchers.IO).launch {
             try {
-                var countTest = 0
-                val retrofitDashboard = RetrofitInstance_Crypto
                 while(true){
-
                     // 값을 가져오고
                     val cryptoKorBit = retrofitDashboard.api.getCryptoDetail("KRW-BTC")
                     val cryptoUsdBit = retrofitDashboard.api.getCryptoDetail("USDT-BTC")
@@ -176,6 +173,7 @@ class CryptoActivity : FragmentActivity() {
         }
     }
 
+    // 차트 초기화 함수
     fun initChart() {
         binding.apply {
             priceChart.setMaxVisibleValueCount(200)
@@ -210,6 +208,7 @@ class CryptoActivity : FragmentActivity() {
         }
     }
 
+    // 차트데이터 세팅 함수
     fun setChartData(candles: CryptoChart) {
         val priceEntries = ArrayList<CandleEntry>()
         var count = 0
