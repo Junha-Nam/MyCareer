@@ -148,7 +148,7 @@
                                 android:gravity="left"
                                 android:padding="3dp" />
                             <TextView
-                                android:id="@+id/highest_52_date"
+                                android:id="@+id/dividend"
                                 android:gravity="left"
                                 android:padding="3dp" />
                         </TableRow>
@@ -185,7 +185,7 @@
                                 android:gravity="left"
                                 android:padding="3dip" />
                             <TextView
-                                android:id="@+id/lowest_52_date"
+                                android:id="@+id/lowest_52_price"
                                 android:gravity="left"
                                 android:padding="3dip" />
                         </TableRow>
@@ -203,7 +203,7 @@
                                 android:gravity="left"
                                 android:padding="3dip" />
                             <TextView
-                                android:id="@+id/lowest_52_price"
+                                android:id="@+id/pbr"
                                 android:gravity="left"
                                 android:padding="3dip" />
                         </TableRow>

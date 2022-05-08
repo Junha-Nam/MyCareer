@@ -2,8 +2,8 @@ package com.example.myfinancialdash.utils
 
 class KorStockConstants {
     companion object{
-        const val API_KEY_KOR_STOCK = ""
-        const val BASE_URL_KOR_STOCK = ""
+        const val BASE_URL_KOR_STOCK = "https://m.stock.naver.com/"
+        const val BASE_URL_KOR_CHART = "https://api.stock.naver.com/"
 
     }
 }
@@ -11,8 +11,8 @@ class KorStockConstants {
 class UsdStockConstants {
     companion object {
         const val API_KEY_USD_STOCK = ""
-        const val BASE_URL_USD_STOCK = ""
-        const val BASE_URL_USD_INFORMATION = ""
+        const val BASE_URL_USD_STOCK = "https://api.stock.naver.com/"
+        const val BASE_URL_USD_STOCK_CHART = "https://api.stock.naver.com/"
     }
 }
 

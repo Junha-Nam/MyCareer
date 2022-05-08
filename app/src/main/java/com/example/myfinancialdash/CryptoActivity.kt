@@ -8,7 +8,11 @@ import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
+import com.example.myfinancialdash.MainActivity
+import com.example.myfinancialdash.api.RetrofitInstance_Bond
 import com.example.myfinancialdash.api.RetrofitInstance_Crypto
+import com.example.myfinancialdash.api.RetrofitInstance_Dollar
+import com.example.myfinancialdash.api.RetrofitInstance_IndexStock
 import com.example.myfinancialdash.data.cryptochart.CryptoChart
 import com.example.myfinancialdash.databinding.ActivityCryptoBinding
 import com.github.mikephil.charting.components.XAxis
@@ -34,10 +38,13 @@ class CryptoActivity : FragmentActivity() {
         // 여기는 우측 대시보드. 즉, 실시간으로 계속 새로고침? 갱신 이 되어야 하는 곳이야. 
         var countTest = 0
         val retrofitDashboard = RetrofitInstance_Crypto
+
         jobDashboard = CoroutineScope(Dispatchers.IO).launch {
             try {
                 while(true){
                     // 값을 가져오고
+                    val usdIndexSearch = RetrofitInstance_IndexStock.api.getUsdIndex()
+                    val dollarIndexSearch = RetrofitInstance_Dollar.api.getIndexDollar()
                     val cryptoKorBit = retrofitDashboard.api.getCryptoDetail("KRW-BTC")
                     val cryptoUsdBit = retrofitDashboard.api.getCryptoDetail("USDT-BTC")
                     val cryptoKorEth = retrofitDashboard.api.getCryptoDetail("KRW-ETH")
@@ -45,6 +52,10 @@ class CryptoActivity : FragmentActivity() {
                     val cryptoKorDog = retrofitDashboard.api.getCryptoDetail("KRW-DOGE")
                     val cryptoUsdDog = retrofitDashboard.api.getCryptoDetail("USDT-DOGE")
 
+                    // data에서 필요부분만 뽑아내기
+
+                    val usdIndexSearchBody = usdIndexSearch.body()?.datas
+                    val dollarIndexSearchBody = dollarIndexSearch.body()
                     //Body를 저장해서
                     val cryptoKorBitBody = cryptoKorBit.body()
                     val cryptoUsdBitBody = cryptoUsdBit.body()
@@ -52,6 +63,32 @@ class CryptoActivity : FragmentActivity() {
                     val cryptoUsdEthBody = cryptoUsdEth.body()
                     val cryptoKorDogBody = cryptoKorDog.body()
                     val cryptoUsdDogBody = cryptoUsdDog.body()
+
+                    // snp500 나스닥 다우존스
+                    if (usdIndexSearchBody != null) {
+                        for (i in usdIndexSearchBody) {
+                            if (i.reutersCode == ".IXIC") {
+                                binding.NasdaqPrice.text = i.closePrice
+                                binding.NasdaqRate.text = i.fluctuationsRatio
+                                break
+                            }
+                        }
+                    }
+
+                    // 달러
+
+                    if (dollarIndexSearchBody != null) {
+                        for (i in dollarIndexSearchBody) {
+                            if (i.symbolCode == "USD") {
+                                binding.dollarPrice.text = i.closePrice
+                                binding.dollarRate.text = i.fluctuationsRatio
+                                break
+                            }
+                        }
+                    }
+
+
+
 
                     //price와 rate를 뿌려준다.
                     binding.krwBtcPrice.text = cryptoKorBitBody?.get(0)?.trade_price.toString()
@@ -69,7 +106,6 @@ class CryptoActivity : FragmentActivity() {
                     binding.usdDogRate.text = cryptoUsdDogBody?.get(0)?.signed_change_rate.toString()
 
                     countTest += 1
-                    binding.loopTest.text = countTest.toString()
 
                     //CryptoData().cryptoIndex(retrofitDashboard)
 
@@ -175,7 +211,6 @@ class CryptoActivity : FragmentActivity() {
                             }
 
                             count += 1
-                            binding.loopTest2.text = count.toString()
                             delay(3000)
 
                         }

@@ -455,16 +455,31 @@
                 android:layout_margin="10dp">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:background="@drawable/index_status"
                     android:textColor="#ffffff"
                     android:text="testing"
                     android:layout_weight="1"
-                    android:layout_margin="4dp">
+                    android:layout_margin="4dp"
+                    android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/loopTest"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Nasdaq"
+                        android:gravity="center"
+                        android:layout_weight="1"/>
+
+                    <TextView
+                        android:id="@+id/Nasdaq_price"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_weight="4"/>
+
+                    <TextView
+                        android:id="@+id/Nasdaq_rate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
@@ -473,16 +488,31 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:background="@drawable/index_status"
                     android:textColor="#ffffff"
                     android:text="testing"
                     android:layout_weight="1"
-                    android:layout_margin="4dp">
+                    android:layout_margin="4dp"
+                    android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/loopTest2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="환율(원/달러)"
+                        android:gravity="center"
+                        android:layout_weight="1"/>
+
+                    <TextView
+                        android:id="@+id/dollar_price"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_weight="4"/>
+
+                    <TextView
+                        android:id="@+id/dollar_rate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
@@ -492,13 +522,14 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:background="@drawable/index_status"
                     android:textColor="#ffffff"
                     android:text="testing"
                     android:layout_weight="1"
-                    android:layout_margin="4dp"/>
+                    android:layout_margin="4dp"
+                    android:orientation="vertical"/>
 
             </LinearLayout>
         </LinearLayout>

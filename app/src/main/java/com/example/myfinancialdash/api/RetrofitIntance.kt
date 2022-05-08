@@ -1,8 +1,6 @@
 package com.example.myfinancialdash.api
 
-import com.example.myfinancialdash.utils.CryptoConstants
-import com.example.myfinancialdash.utils.IndexConstants
-import com.example.myfinancialdash.utils.SearchConstants
+import com.example.myfinancialdash.utils.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -36,7 +34,7 @@ class RetrofitInstance_Crypto() {
     }
 }
 
-class RetrofitInstance_KorStock() {
+class RetrofitInstance_KorStockDetail() {
 
     companion object{
         private val retrofit by lazy{
@@ -50,14 +48,40 @@ class RetrofitInstance_KorStock() {
                 .build()
             //api에서 Json으로 가져온 데이터를 gson으로 코틀린에서 읽기 가능하게 변환 하는작업
             Retrofit.Builder()
-                .baseUrl(CryptoConstants.BASE_URL_CRYPTO)
+                .baseUrl(KorStockConstants.BASE_URL_KOR_STOCK)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build()
         }
 
         val api by lazy{
-            retrofit.create(CryptoAPI::class.java)
+            retrofit.create(KorStockAPI::class.java)
+        }
+    }
+}
+
+class RetrofitInstance_KorStockChart() {
+
+    companion object{
+        private val retrofit by lazy{
+            //인터셉터 추가
+            val logging = HttpLoggingInterceptor()
+            logging.setLevel(HttpLoggingInterceptor.Level.BODY)
+
+            //클라이언트 생성
+            val client = OkHttpClient.Builder()
+                .addInterceptor(logging)
+                .build()
+            //api에서 Json으로 가져온 데이터를 gson으로 코틀린에서 읽기 가능하게 변환 하는작업
+            Retrofit.Builder()
+                .baseUrl(KorStockConstants.BASE_URL_KOR_CHART)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client)
+                .build()
+        }
+
+        val api by lazy{
+            retrofit.create(KorStockAPI::class.java)
         }
     }
 }
@@ -76,14 +100,14 @@ class RetrofitInstance_USDStock() {
                 .build()
             //api에서 Json으로 가져온 데이터를 gson으로 코틀린에서 읽기 가능하게 변환 하는작업
             Retrofit.Builder()
-                .baseUrl(CryptoConstants.BASE_URL_CRYPTO)
+                .baseUrl(UsdStockConstants.BASE_URL_USD_STOCK)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build()
         }
 
         val api by lazy{
-            retrofit.create(CryptoAPI::class.java)
+            retrofit.create(UsdStockAPI::class.java)
         }
     }
 }

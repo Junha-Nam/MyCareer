@@ -1,7 +1,31 @@
 package com.example.myfinancialdash.data.usdstock
 
 data class UsdStockDetail(
-    val datas: List<Data>,
-    val pollingInterval: Int,
-    val time: String
+    val closePrice: String,
+    val compareToPreviousClosePrice: String,
+    val compareToPreviousPrice: CompareToPreviousPrice,
+    val countOfListedStock: Long,
+    val currencyType: CurrencyType,
+    val delayTime: Int,
+    val delayTimeName: String,
+    val etfThemaInfos: Any,
+    val exchangeOperatingTime: Boolean,
+    val fluctuationsRatio: String,
+    val hasNews: Boolean,
+    val indexOrEtfToolTip: Any,
+    val isEtf: Boolean,
+    val isEtfAmerica: Boolean,
+    val isFinanceSummary: Boolean,
+    val localTradedAt: String,
+    val marketStatus: String,
+    val nationName: String,
+    val nationType: String,
+    val reutersCode: String,
+    val stockEndType: String,
+    val stockExchangeName: String,
+    val stockItemTotalInfos: List<StockItemTotalInfo>,
+    val stockName: String,
+    val stockNameEng: String,
+    val symbolCode: String,
+    val tradeStopType: TradeStopType
 )

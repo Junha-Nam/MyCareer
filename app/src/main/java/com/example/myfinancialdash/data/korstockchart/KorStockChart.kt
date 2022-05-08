@@ -1,8 +1,12 @@
 package com.example.myfinancialdash.data.korstockchart
 
 data class KorStockChart(
-    val msg1: String,
-    val msg_cd: String,
-    val output: List<Output>,
-    val rt_cd: String
+    val code: String,
+    val decimalUnit: Int,
+    val hasVolume: Boolean,
+    val infoType: String,
+    val newlyListed: Boolean,
+    val periodType: String,
+    val priceInfos: List<PriceInfo>,
+    val stockExchangeType: String
 )
