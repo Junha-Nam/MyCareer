@@ -3,8 +3,11 @@ package com.example.myfinancialdash
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Paint
-import androidx.fragment.app.FragmentActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.widget.Toast
+import androidx.fragment.app.FragmentActivity
 import com.example.myfinancialdash.api.RetrofitInstance_Crypto
 import com.example.myfinancialdash.data.cryptochart.CryptoChart
 import com.example.myfinancialdash.databinding.ActivityCryptoBinding
@@ -14,6 +17,7 @@ import com.github.mikephil.charting.data.CandleData
 import com.github.mikephil.charting.data.CandleDataSet
 import com.github.mikephil.charting.data.CandleEntry
 import kotlinx.coroutines.*
+
 
 class CryptoActivity : FragmentActivity() {
 
@@ -100,61 +104,82 @@ class CryptoActivity : FragmentActivity() {
                     val cryptoSearch = retrofitCryptoSearch.api.getCryptoSearch()
                     val cryptoSearchBody = cryptoSearch.body()
 
-
+                    var isTrue = 0
                     if (cryptoSearchBody != null) {
                         for (i in cryptoSearchBody) {
                             if (i.korean_name == korean_name && i.market.contains("KRW")) {
                                 println(i.market)
                                 searchMarket = i.market
                                 korean_name = i.korean_name
+                                isTrue = 1
                             } else {
                                 // 여기에 정보가 없으면 메세지를 띄우고 해당 코루틴을 스톱을 시키면 되지아느까?
                             }
                         }
+
                     }
+                    if (isTrue == 0) {
+                        val handler = Handler(Looper.getMainLooper())
+                        handler.postDelayed(java.lang.Runnable {
+                            Toast.makeText(applicationContext,"검색결과가 없습니다. 이름을 다시 확인해주세요.", Toast.LENGTH_SHORT).show()
+                        }, 0)
 
-                    // 2. 차트정보 가져와 차트그리기
-                    val cryptoChart = retrofitCryptoSearch.api.getCryptoChart(searchMarket,100)
-                    val cryptoChartBody = cryptoChart.body()
+                        //Toast.makeText("") 여기다가 에러메세지 만들고 끝
+                    } else {
 
-                    initChart()
-                    if (cryptoChartBody != null) {
-                        setChartData(cryptoChartBody)
-                    }
+                        // 2. 차트정보 가져와 차트그리기
+                        val cryptoChart = retrofitCryptoSearch.api.getCryptoChart(searchMarket, 100)
+                        val cryptoChartBody = cryptoChart.body()
 
-                    // 2-1. 차트 그리기
-
-                    // 3. 세부정보 가져와 표에 뿌리기
-                    // 여기 부분이 무한루프가 돌아야됨. 재 검색 버튼을 누르거나, 화면이 넘어갈때 초기화.
-
-                    binding.cryptoName.text = korean_name
-                    var count = 0
-                    // 3-1. 표에 뿌리기
-                    while(true) {
-                        val cryptoDetail = retrofitCryptoSearch.api.getCryptoDetail(searchMarket)
-                        val cryptoDetailBody = cryptoDetail.body()
-
-                        runOnUiThread {
-                            // UI변경 부분을 입력하자
-                            binding.cryptoPrice.text = cryptoDetailBody?.get(0)?.trade_price.toString()
-                            binding.cryptoPercent.text = cryptoDetailBody?.get(0)?.signed_change_rate.toString()
-
-                            binding.openingPrice.text = cryptoDetailBody?.get(0)?.opening_price.toString()
-                            binding.highest52Date.text = cryptoDetailBody?.get(0)?.highest_52_week_date.toString()
-                            binding.highPrice.text = cryptoDetailBody?.get(0)?.high_price.toString()
-                            binding.highest52Price.text = cryptoDetailBody?.get(0)?.highest_52_week_price.toString()
-                            binding.lowPrice.text = cryptoDetailBody?.get(0)?.low_price.toString()
-                            binding.lowest52Date.text = cryptoDetailBody?.get(0)?.lowest_52_week_date.toString()
-                            binding.prevPrice.text = cryptoDetailBody?.get(0)?.prev_closing_price.toString()
-                            binding.lowest52Price.text = cryptoDetailBody?.get(0)?.lowest_52_week_price.toString()
+                        initChart()
+                        if (cryptoChartBody != null) {
+                            setChartData(cryptoChartBody)
                         }
 
-                        count+= 1
-                        binding.loopTest2.text = count.toString()
-                        delay(3000)
+                        // 2-1. 차트 그리기
 
+                        // 3. 세부정보 가져와 표에 뿌리기
+                        // 여기 부분이 무한루프가 돌아야됨. 재 검색 버튼을 누르거나, 화면이 넘어갈때 초기화.
+
+                        binding.cryptoName.text = korean_name
+                        var count = 0
+                        // 3-1. 표에 뿌리기
+                        while (true) {
+                            val cryptoDetail =
+                                retrofitCryptoSearch.api.getCryptoDetail(searchMarket)
+                            val cryptoDetailBody = cryptoDetail.body()
+
+                            runOnUiThread {
+                                // UI변경 부분을 입력하자
+                                binding.cryptoPrice.text =
+                                    cryptoDetailBody?.get(0)?.trade_price.toString()
+                                binding.cryptoPercent.text =
+                                    cryptoDetailBody?.get(0)?.signed_change_rate.toString()
+
+                                binding.openingPrice.text =
+                                    cryptoDetailBody?.get(0)?.opening_price.toString()
+                                binding.highest52Date.text =
+                                    cryptoDetailBody?.get(0)?.highest_52_week_date.toString()
+                                binding.highPrice.text =
+                                    cryptoDetailBody?.get(0)?.high_price.toString()
+                                binding.highest52Price.text =
+                                    cryptoDetailBody?.get(0)?.highest_52_week_price.toString()
+                                binding.lowPrice.text =
+                                    cryptoDetailBody?.get(0)?.low_price.toString()
+                                binding.lowest52Date.text =
+                                    cryptoDetailBody?.get(0)?.lowest_52_week_date.toString()
+                                binding.prevPrice.text =
+                                    cryptoDetailBody?.get(0)?.prev_closing_price.toString()
+                                binding.lowest52Price.text =
+                                    cryptoDetailBody?.get(0)?.lowest_52_week_price.toString()
+                            }
+
+                            count += 1
+                            binding.loopTest2.text = count.toString()
+                            delay(3000)
+
+                        }
                     }
-
                 } catch(e:Exception) {
                     e.printStackTrace()
 

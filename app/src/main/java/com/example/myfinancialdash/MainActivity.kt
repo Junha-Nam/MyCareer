@@ -4,9 +4,11 @@ package com.example.myfinancialdash
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
-import com.example.myfinancialdash.api.RetrofitInstance_Crypto
-import com.example.myfinancialdash.api.RetrofitInstance_IndexStock
+import com.example.myfinancialdash.api.*
 //import com.example.myfinancialdash.api.RetrofitInstance
 import com.example.myfinancialdash.databinding.ActivityMainBinding
 import kotlinx.coroutines.*
@@ -37,15 +39,83 @@ class MainActivity : FragmentActivity() {
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-        //
+        // 대시보드 만들기
 
-
-
-        val retrofitDashboard = RetrofitInstance_IndexStock
+        val retrofitDashboardIndex = RetrofitInstance_IndexStock
+        val retrofitDashboardDollar = RetrofitInstance_Dollar
+        val retrofitDashboardBond = RetrofitInstance_Bond
         jobDashboard = CoroutineScope(Dispatchers.IO).launch {
             try {
+                while(true) {
+                    // 값 가져오기
+                    val korIndexSearch = retrofitDashboardIndex.api.getKorIndex()
+                    val usdIndexSearch = retrofitDashboardIndex.api.getUsdIndex()
+                    val dollarIndexSearch = retrofitDashboardDollar.api.getIndexDollar()
+                    val bondIndexSearch = retrofitDashboardBond.api.getIndexBond()
 
+                    // data에서 필요부분만 뽑아내기
+                    val korIndexSearchBody = korIndexSearch.body()?.datas
+                    val usdIndexSearchBody = usdIndexSearch.body()?.datas
+                    val dollarIndexSearchBody = dollarIndexSearch.body()
+                    val bondIndexSearchBody = bondIndexSearch.body()
 
+                    // 코스피 코스닥
+                    if (korIndexSearchBody != null) {
+                        for (i in korIndexSearchBody) {
+                            if (i.itemCode == "KOSPI") {
+                                binding.kospiIndex.text = i.closePrice
+                                binding.kospiRate.text = i.fluctuationsRatio
+                            } else if (i.itemCode == "KOSDAQ") {
+                                binding.kosdaqIndex.text = i.closePrice
+                                binding.kosdaqRate.text = i.fluctuationsRatio
+                            }
+                        }
+                    }
+
+                    // snp500 나스닥 다우존스
+                    if (usdIndexSearchBody != null) {
+                        for (i in usdIndexSearchBody) {
+                            if (i.reutersCode == ".DJI") {
+                                binding.dowPrice.text = i.closePrice
+                                binding.dowRate.text = i.fluctuationsRatio
+                            } else if (i.reutersCode == ".IXIC") {
+                                binding.NasdaqPrice.text = i.closePrice
+                                binding.NasdaqRate.text = i.fluctuationsRatio
+                            } else if (i.reutersCode == ".INX") {
+                                binding.snp500Price.text = i.closePrice
+                                binding.snp500Rate.text = i.fluctuationsRatio
+                            }
+
+                        }
+                    }
+
+                    // 달러
+
+                    if (dollarIndexSearchBody != null) {
+                        for (i in dollarIndexSearchBody) {
+                            if (i.symbolCode == "USD") {
+                                binding.dollarPrice.text = i.closePrice
+                                binding.dollarRate.text = i.fluctuationsRatio
+                                break
+                            }
+                        }
+                    }
+
+                    if (bondIndexSearchBody != null) {
+                        for (i in bondIndexSearchBody) {
+                            if (i.reutersCode == "US10YT=RR") {
+                                binding.bondPrice.text = i.closePrice
+                                binding.bondRate.text = i.fluctuationsRatio
+                                break
+                            }
+                        }
+                    }
+
+                    delay(2000)
+                }
+                    //
+
+                // 해당 박스에 다 뿌리기..
             } catch(e:Exception) {
                 e.printStackTrace()
 
@@ -62,31 +132,68 @@ class MainActivity : FragmentActivity() {
 
         //
 
-        // 버튼 클릭 시. 코루틴 비동기 처리
-        // 세부내역 표시(좌측화면)
-       binding.searchStock.setOnClickListener{
-            CoroutineScope(Dispatchers.IO).launch {
-                try {
 
-
-
-
-
-
-                } catch (e:Exception) {
-                    e.printStackTrace()
-                }
-
-
-
-            }
-        }
 
         // 검색버튼 클릭 시 동작.
         binding.searchStock.setOnClickListener{
-            CoroutineScope(Dispatchers.IO).launch {
+            jobSearch?.cancel()
+            // 1. 검색을 한다. 한국 미국 양쪽에서
+            val search_name = binding.editStock.text.toString()
+            var korean_name = ""
+            if(search_name == "a") {
+                korean_name = "애플"
+            } else if (search_name == "b") {
+                korean_name = "삼성전자"
+            }
+            // 2. 검색결과가 없거나 두개 이상이면 올바르게 검색해달라고 얘기하고 종료
+            //     else이면 이제 동작.
+            println(korean_name)
+            val retrofitStockSearch = RetrofitInstance_StockSearch
+            var searchMarket = ""
+            var reutersCode = ""
+            var nation = ""
+            jobSearch = CoroutineScope(Dispatchers.IO).launch {
                 try {
+                    delay(500)
+                    // 1. 한글명으로 MarketCode 찾기a
+                    val stockSearch = retrofitStockSearch.api.getStockSearch(korean_name)
+                    val stockSearchBody = stockSearch.body()?.items
+                    println(stockSearchBody)
+                    var isTrue = 0
+                    if (stockSearchBody != null) {
+                        for (i in stockSearchBody) {
+                            if (i.name == korean_name) {
+                                println(i.name)
+                                searchMarket = i.reutersCode
+                                korean_name = i.name
+                                nation = i.nationName
+                                isTrue = 1
+                                break
+                            } else {
+                                // 여기에 정보가 없으면 메세지를 띄우고 해당 코루틴을 스톱을 시키면 되지아느까?
+                            }
+                        }
 
+                    }
+                    if (isTrue == 0) {
+                        val handler = Handler(Looper.getMainLooper())
+                        handler.postDelayed(java.lang.Runnable {
+                            Toast.makeText(applicationContext,"검색결과가 없습니다. 이름을 다시 확인해주세요.", Toast.LENGTH_SHORT).show()
+                        }, 0)
+
+                        //Toast.makeText("") 여기다가 에러메세지 만들고 끝
+                    } else {
+                        // 세부정보 가져오기
+                        // 나라명으로 해서 한국이면 한투api 아니면 네이버 api
+                        if(nation =="대한민국") {
+
+                        } else {
+                        }
+                        // 차트정보 가져와서 그리기
+
+                        // 표 정보 가져와서 뿌리기
+
+                    }
 
 
 
@@ -99,6 +206,12 @@ class MainActivity : FragmentActivity() {
 
 
             }
+            // 3. 이게 한국주식이면 한투 API를 탈거고 아니면 네이버 API를 탄다.
+
+            // 4. 각각의 API에서 데이터들(차트, 세부정보) 가져와서 뿌린다.
+
+            // 5. 저 4번을 반복한다. 구조는 CRYPTO랑 똑같이이
+
         }
 
         // crypto로 화면전환

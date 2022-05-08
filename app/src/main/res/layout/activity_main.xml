@@ -1,24 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_browse_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     tools:deviceIds="tv"
     tools:ignore="MergeRootFrame"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#FFFFFF">
 
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:orientation="horizontal">
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:layout_marginBottom="20dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="StockDashboard">
+            android:text="StockDashboard"
+            android:textColor="#000000">
 
         </TextView>
 
@@ -43,56 +48,489 @@
                 android:layout_height="match_parent"
                 android:background="#331252"
                 android:layout_weight="1"
+                android:weightSum="10"
                 android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="RecyclerView">
-
-                    </TextView>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:weightSum="8">
 
                     <EditText
-                        android:layout_width="381dp"
-                        android:layout_height="56dp">
-
+                        android:inputType="text"
+                        android:id="@+id/edit_stock"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="7">
 
                     </EditText>
 
                     <Button
                         android:id="@+id/search_stock"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
                         android:text="Button" />
 
                 </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="2"
+                    android:weightSum="5"
+                    android:orientation="horizontal">
 
+                    <TextView
+                        android:id="@+id/stock_name"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:padding="3dp"
+                        android:layout_weight="1"/>
 
+                    <TextView
+                        android:id="@+id/stock_price"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:padding="3dp"
+                        android:layout_weight="1"/>
+
+                    <TextView
+                        android:id="@+id/stock_percent"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:padding="3dp"
+                        android:layout_weight="1"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:padding="3dp"
+                        android:layout_weight="2"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="4">
+                    <com.github.mikephil.charting.charts.CandleStickChart
+                        android:id="@+id/priceChart"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="3">
+                    <TableLayout
+                        android:gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:stretchColumns="0,1,2,3">
+                        <TableRow>
+                            <TextView
+                                android:text="시가"
+                                android:gravity="left"
+                                android:padding="3dp" />
+                            <TextView
+                                android:id="@+id/opening_price"
+                                android:gravity="left"
+                                android:padding="3dp" />
+                            <TextView
+                                android:text="배당률"
+                                android:gravity="left"
+                                android:padding="3dp" />
+                            <TextView
+                                android:id="@+id/highest_52_date"
+                                android:gravity="left"
+                                android:padding="3dp" />
+                        </TableRow>
+
+                        <TableRow>
+                            <TextView
+                                android:text="고가"
+                                android:gravity="left"
+                                android:padding="3dip" />
+                            <TextView
+                                android:id="@+id/high_price"
+                                android:gravity="left"
+                                android:padding="3dip" />
+                            <TextView
+                                android:text="52주 신고가"
+                                android:gravity="left"
+                                android:padding="3dip" />
+                            <TextView
+                                android:id="@+id/highest_52_price"
+                                android:gravity="left"
+                                android:padding="3dip" />
+                        </TableRow>
+                        <TableRow>
+                            <TextView
+                                android:text="저가"
+                                android:gravity="left"
+                                android:padding="3dip" />
+                            <TextView
+                                android:id="@+id/low_price"
+                                android:gravity="left"
+                                android:padding="3dip" />
+                            <TextView
+                                android:text="52주 신저가"
+                                android:gravity="left"
+                                android:padding="3dip" />
+                            <TextView
+                                android:id="@+id/lowest_52_date"
+                                android:gravity="left"
+                                android:padding="3dip" />
+                        </TableRow>
+                        <TableRow>
+                            <TextView
+                                android:text="전일종가"
+                                android:gravity="left"
+                                android:padding="3dip" />
+                            <TextView
+                                android:id="@+id/prev_price"
+                                android:gravity="left"
+                                android:padding="3dip" />
+                            <TextView
+                                android:text="PBR"
+                                android:gravity="left"
+                                android:padding="3dip" />
+                            <TextView
+                                android:id="@+id/lowest_52_price"
+                                android:gravity="left"
+                                android:padding="3dip" />
+                        </TableRow>
+                        <TableRow>
+                            <TextView
+                                android:text="PER"
+                                android:gravity="left"
+                                android:padding="3dip" />
+                            <TextView
+                                android:id="@+id/per"
+                                android:gravity="left"
+                                android:padding="3dip" />
+                            <TextView
+                                android:text="EPS"
+                                android:gravity="left"
+                                android:padding="3dip" />
+                            <TextView
+                                android:id="@+id/eps"
+                                android:gravity="left"
+                                android:padding="3dip" />
+                        </TableRow>
+                    </TableLayout>
+                </LinearLayout>
 
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
+                android:weightSum="3"
+                android:layout_margin="10dp"
                 android:layout_weight="1">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="225dp"
+                    android:weightSum="3"
+                    android:layout_weight="1"
+                    android:layout_margin="10dp"
+                    >
+
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="225dp"
-                        android:background="#665242">
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/index_status"
+                        android:textColor="#ffffff"
+                        android:layout_weight="1"
+                        android:layout_margin="4dp"
+                        android:weightSum="6"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="코스피"
+                            android:gravity="center"
+                            android:layout_weight="1"/>
+
+                        <TextView
+                            android:id="@+id/kospi_index"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:layout_weight="4"/>
+
+                        <TextView
+                            android:id="@+id/kospi_rate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:layout_weight="1"/>
 
                     </LinearLayout>
+
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="225dp"
-                        android:background="#5542ff">
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/index_status"
+                        android:textColor="#ffffff"
+                        android:layout_weight="1"
+                        android:layout_margin="4dp"
+                        android:weightSum="6"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="코스닥"
+                            android:gravity="center"
+                            android:layout_weight="1"/>
+
+                        <TextView
+                            android:id="@+id/kosdaq_index"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:layout_weight="4"/>
+
+                        <TextView
+                            android:id="@+id/kosdaq_rate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:layout_weight="1"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:textColor="#ffffff"
+                        android:layout_weight="1"
+                        android:layout_margin="4dp"
+                        android:weightSum="6"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:layout_weight="1"/>
+
+                        <TextView
+                            android:id="@+id/krw_dog_price"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:layout_weight="4"/>
+
+                        <TextView
+                            android:id="@+id/krw_dog_rate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:layout_weight="1"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="225dp"
+                    android:layout_weight="1"
+                    android:weightSum="3"
+                    android:layout_margin="10dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/index_status"
+                        android:textColor="#ffffff"
+                        android:layout_weight="1"
+                        android:layout_margin="4dp"
+                        android:weightSum="6"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="SnP 500"
+                            android:gravity="center"
+                            android:layout_weight="1"/>
+
+                        <TextView
+                            android:id="@+id/snp500_price"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:layout_weight="4"/>
+
+                        <TextView
+                            android:id="@+id/snp500_rate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:layout_weight="1"/>
 
                     </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/index_status"
+                        android:textColor="#ffffff"
+                        android:text="testing"
+                        android:layout_weight="1"
+                        android:layout_margin="4dp"
+                        android:weightSum="6"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Nasdaq"
+                            android:gravity="center"
+                            android:layout_weight="1"/>
+
+                        <TextView
+                            android:id="@+id/Nasdaq_price"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:layout_weight="4"/>
+
+                        <TextView
+                            android:id="@+id/Nasdaq_rate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:layout_weight="1"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/index_status"
+                        android:textColor="#ffffff"
+                        android:layout_weight="1"
+                        android:layout_margin="4dp"
+                        android:weightSum="6"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="다우존스"
+                            android:gravity="center"
+                            android:layout_weight="1"/>
+
+                        <TextView
+                            android:id="@+id/dow_price"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:layout_weight="4"/>
+
+                        <TextView
+                            android:id="@+id/dow_rate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:layout_weight="1"/>
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="225dp"
+                    android:layout_weight="1"
+                    android:weightSum="3"
+                    android:layout_margin="10dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/index_status"
+                        android:textColor="#ffffff"
+                        android:text="testing"
+                        android:layout_weight="1"
+                        android:layout_margin="4dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="환율(원/달러)"
+                            android:gravity="center"
+                            android:layout_weight="1"/>
+
+                        <TextView
+                            android:id="@+id/dollar_price"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:layout_weight="4"/>
+
+                        <TextView
+                            android:id="@+id/dollar_rate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:layout_weight="1"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/index_status"
+                        android:textColor="#ffffff"
+                        android:layout_weight="1"
+                        android:layout_margin="4dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="10년물 금리"
+                            android:gravity="center"
+                            android:layout_weight="1"/>
+
+                        <TextView
+                            android:id="@+id/bond_price"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:layout_weight="4"/>
+
+                        <TextView
+                            android:id="@+id/bond_rate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:layout_weight="1"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textColor="#ffffff"
+                        android:text="testing"
+                        android:layout_weight="1"
+                        android:layout_margin="4dp"/>
+
+                </LinearLayout>
             </LinearLayout>
 
     </LinearLayout>
