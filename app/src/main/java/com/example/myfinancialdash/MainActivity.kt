@@ -49,16 +49,18 @@ class MainActivity : FragmentActivity() {
 
 
         // 대시보드 만들기
-
+        val RetrofitInstanceIndexStock = RetrofitInstance_IndexStock
+        val RetrifitInstanceDollar = RetrofitInstance_Dollar
+        val RetrofitInstanceBond = RetrofitInstance_Bond
 
         jobDashboard = CoroutineScope(Dispatchers.IO).launch {
             try {
                 while(true) {
                     // 값 가져오기
-                    val korIndexSearch = RetrofitInstance_IndexStock.api.getKorIndex()
-                    val usdIndexSearch = RetrofitInstance_IndexStock.api.getUsdIndex()
-                    val dollarIndexSearch = RetrofitInstance_Dollar.api.getIndexDollar()
-                    val bondIndexSearch = RetrofitInstance_Bond.api.getIndexBond()
+                    val korIndexSearch = RetrofitInstanceIndexStock.api.getKorIndex()
+                    val usdIndexSearch = RetrofitInstanceIndexStock.api.getUsdIndex()
+                    val dollarIndexSearch = RetrifitInstanceDollar.api.getIndexDollar()
+                    val bondIndexSearch = RetrofitInstanceBond.api.getIndexBond()
 
                     // data에서 필요부분만 뽑아내기
                     val korIndexSearchBody = korIndexSearch.body()?.datas
@@ -142,6 +144,11 @@ class MainActivity : FragmentActivity() {
 
 
         // 검색버튼 클릭 시 동작.
+        
+        val retrofitInstanceStockSearch = RetrofitInstance_StockSearch
+        val retrofitInstanceKorStockChart = RetrofitInstance_KorStockChart
+        val retrofitInstanceKorStockDetail = RetrofitInstance_KorStockDetail
+        val retrofitInstanceUsdStock = RetrofitInstance_USDStock
         binding.searchStock.setOnClickListener{
             jobSearch?.cancel()
             // 1. 검색을 한다. 한국 미국 양쪽에서
@@ -154,21 +161,18 @@ class MainActivity : FragmentActivity() {
             }
             // 2. 검색결과가 없거나 두개 이상이면 올바르게 검색해달라고 얘기하고 종료
             //     else이면 이제 동작.
-            println(korean_name)
             var reutersCode = ""
             var nation = ""
             jobSearch = CoroutineScope(Dispatchers.IO).launch {
                 try {
                     delay(500)
                     // 1. 한글명으로 MarketCode 찾기
-                    val stockSearch = RetrofitInstance_StockSearch.api.getStockSearch(korean_name)
+                    val stockSearch = retrofitInstanceStockSearch.api.getStockSearch(korean_name)
                     val stockSearchBody = stockSearch.body()?.items
-                    println(stockSearchBody)
                     var isTrue = 0
                     if (stockSearchBody != null) {
                         for (i in stockSearchBody) {
                             if (i.name == korean_name) {
-                                println(i.name)
                                 reutersCode = i.reutersCode
                                 korean_name = i.name
                                 nation = i.nationName
@@ -192,11 +196,11 @@ class MainActivity : FragmentActivity() {
                         //
                         if (nation == "대한민국") {
                             //한국 차트
-                            val KorStockChart = RetrofitInstance_KorStockChart.api.getKorChart(reutersCode)
-                            val KorStockChartBody = KorStockChart.body()
+                            val korStockChart = retrofitInstanceKorStockChart.api.getKorChart(reutersCode)
+                            val korStockChartBody = korStockChart.body()
                             initChart()
-                            if (KorStockChartBody != null) {
-                                setChartDataKor(KorStockChartBody)
+                            if (korStockChartBody != null) {
+                                setChartDataKor(korStockChartBody)
                             }
                             // 한국 상세
 
@@ -204,42 +208,42 @@ class MainActivity : FragmentActivity() {
                             var count = 0
                             // 3-1. 표에 뿌리기
                             while (true) {
-                                val KorStockDetail = RetrofitInstance_KorStockDetail.api.getKorStock(reutersCode)
-                                val KorStockClose = RetrofitInstance_KorStockDetail.api.getKorStockClose(reutersCode)
+                                val korStockDetail = retrofitInstanceKorStockDetail.api.getKorStock(reutersCode)
+                                val korStockClose = retrofitInstanceKorStockDetail.api.getKorStockClose(reutersCode)
                                 println("여긴?")
-                                val KorStockDetailBody = KorStockDetail.body()
-                                val KorStockDetailClose = KorStockClose.body()
+                                val korStockDetailBody = korStockDetail.body()
+                                val korStockDetailClose = korStockClose.body()
                                 println("여긴 오냐?")
-                                val KorStockDetailInfos = KorStockDetailBody?.totalInfos
-                                println(KorStockDetailBody)
+                                val korStockDetailInfos = korStockDetailBody?.totalInfos
+                                println(korStockDetailBody)
 
                                 runOnUiThread {
 
                                     // UI변경 부분을 입력하자
                                     binding.stockPrice.text =
-                                        KorStockDetailClose?.closePrice.toString()
+                                        korStockDetailClose?.closePrice.toString()
                                     binding.stockPercent.text =
-                                        KorStockDetailClose?.fluctuationsRatio.toString()
+                                        korStockDetailClose?.fluctuationsRatio.toString()
                                     binding.openingPrice.text =
-                                        KorStockDetailInfos?.get(1)?.value.toString()
+                                        korStockDetailInfos?.get(1)?.value.toString()
                                     binding.dividend.text =
-                                        KorStockDetailInfos?.get(16)?.value.toString()
+                                        korStockDetailInfos?.get(16)?.value.toString()
                                     binding.highPrice.text =
-                                        KorStockDetailInfos?.get(2)?.value.toString()
+                                        korStockDetailInfos?.get(2)?.value.toString()
                                     binding.highest52Price.text =
-                                        KorStockDetailInfos?.get(8)?.value.toString()
+                                        korStockDetailInfos?.get(8)?.value.toString()
                                     binding.lowPrice.text =
-                                        KorStockDetailInfos?.get(3)?.value.toString()
+                                        korStockDetailInfos?.get(3)?.value.toString()
                                     binding.lowest52Price.text =
-                                        KorStockDetailInfos?.get(9)?.value.toString()
+                                        korStockDetailInfos?.get(9)?.value.toString()
                                     binding.prevPrice.text =
-                                        KorStockDetailInfos?.get(0)?.value.toString()
+                                        korStockDetailInfos?.get(0)?.value.toString()
                                     binding.pbr.text =
-                                        KorStockDetailInfos?.get(14)?.value.toString()
+                                        korStockDetailInfos?.get(14)?.value.toString()
                                     binding.per.text =
-                                        KorStockDetailInfos?.get(10)?.value.toString()
+                                        korStockDetailInfos?.get(10)?.value.toString()
                                     binding.eps.text =
-                                        KorStockDetailInfos?.get(11)?.value.toString()
+                                        korStockDetailInfos?.get(11)?.value.toString()
                                 }
                                 count += 1
                                 delay(3000)
@@ -248,55 +252,52 @@ class MainActivity : FragmentActivity() {
                         } else {
 
                             //미국 차트
-                            val UsdStockChart = RetrofitInstance_USDStock.api.getUsdChart(reutersCode)
-                            val UsdStockChartBody = UsdStockChart.body()
-                            println(UsdStockChartBody)
+                            val usdStockChart = retrofitInstanceUsdStock.api.getUsdChart(reutersCode)
+                            val usdStockChartBody = usdStockChart.body()
+
                             initChart()
-                            if (UsdStockChartBody != null) {
-                                setChartData(UsdStockChartBody)
+                            if (usdStockChartBody != null) {
+                                setChartData(usdStockChartBody)
                             }
 
                             //미국 상세
-
 
                             binding.stockName.text = korean_name
                             var count = 0
                             // 3-1. 표에 뿌리기
                             while (true) {
-                                val USDStockDetail = RetrofitInstance_USDStock.api.getUsdStock(reutersCode)
-                                println("여긴?")
-                                val UsdStockDetailBody = USDStockDetail.body()
-                                println("여긴 오냐?")
-                                val UsdStockDetailInfos = UsdStockDetailBody?.stockItemTotalInfos
-                                println(UsdStockDetailBody)
+                                val usdStockDetail = retrofitInstanceUsdStock.api.getUsdStock(reutersCode)
+                                val usdStockDetailBody = usdStockDetail.body()
+                                val usdStockDetailInfos = usdStockDetailBody?.stockItemTotalInfos
+                                
 
                                 runOnUiThread {
 
                                     // UI변경 부분을 입력하자
                                     binding.stockPrice.text =
-                                        UsdStockDetailBody?.closePrice.toString()
+                                        usdStockDetailBody?.closePrice.toString()
                                     binding.stockPercent.text =
-                                        UsdStockDetailBody?.fluctuationsRatio.toString()
+                                        usdStockDetailBody?.fluctuationsRatio.toString()
                                     binding.openingPrice.text =
-                                        UsdStockDetailInfos?.get(1)?.value.toString()
+                                        usdStockDetailInfos?.get(1)?.value.toString()
                                     binding.dividend.text =
-                                        UsdStockDetailInfos?.get(15)?.value.toString()
+                                        usdStockDetailInfos?.get(15)?.value.toString()
                                     binding.highPrice.text =
-                                        UsdStockDetailInfos?.get(2)?.value.toString()
+                                        usdStockDetailInfos?.get(2)?.value.toString()
                                     binding.highest52Price.text =
-                                        UsdStockDetailInfos?.get(8)?.value.toString()
+                                        usdStockDetailInfos?.get(8)?.value.toString()
                                     binding.lowPrice.text =
-                                        UsdStockDetailInfos?.get(3)?.value.toString()
+                                        usdStockDetailInfos?.get(3)?.value.toString()
                                     binding.lowest52Price.text =
-                                        UsdStockDetailInfos?.get(9)?.value.toString()
+                                        usdStockDetailInfos?.get(9)?.value.toString()
                                     binding.prevPrice.text =
-                                        UsdStockDetailInfos?.get(0)?.value.toString()
+                                        usdStockDetailInfos?.get(0)?.value.toString()
                                     binding.pbr.text =
-                                        UsdStockDetailInfos?.get(12)?.value.toString()
+                                        usdStockDetailInfos?.get(12)?.value.toString()
                                     binding.per.text =
-                                        UsdStockDetailInfos?.get(10)?.value.toString()
+                                        usdStockDetailInfos?.get(10)?.value.toString()
                                     binding.eps.text =
-                                        UsdStockDetailInfos?.get(11)?.value.toString()
+                                        usdStockDetailInfos?.get(11)?.value.toString()
                                 }
                                 count += 1
                                 delay(3000)

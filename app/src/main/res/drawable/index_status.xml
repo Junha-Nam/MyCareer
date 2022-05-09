@@ -8,4 +8,10 @@
         android:angle="90"/>
     <padding android:left="8dp" android:top="2dp"
         android:right="8dp" android:bottom="2dp" />
+
+    <corners
+        android:topLeftRadius="24dp"
+        android:topRightRadius="24dp"
+        android:bottomLeftRadius="24dp"
+        android:bottomRightRadius="24dp" />
 </shape>

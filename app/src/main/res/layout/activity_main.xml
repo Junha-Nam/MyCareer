@@ -17,22 +17,41 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:orientation="horizontal"
+        android:weightSum="10"
         android:layout_marginBottom="20dp">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:text="StockDashboard"
-            android:textColor="#000000">
+            android:layout_weight="3">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="StockDashboard"
+                android:gravity="center"
+                android:textSize="25dp"
+                android:textColor="#000000">
 
-        </TextView>
+            </TextView>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="7"
+            android:weightSum="6">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="5">
+            </LinearLayout>
+            <Button
+                android:id="@+id/button_crypto"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Crypto" />
 
-        <Button
-            android:id="@+id/button_crypto"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:text="Crypto" />
+        </LinearLayout>
 
 
     </LinearLayout>
@@ -46,9 +65,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#331252"
                 android:layout_weight="1"
                 android:weightSum="10"
+                android:layout_marginLeft="10dp"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -134,96 +153,166 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:stretchColumns="0,1,2,3">
-                        <TableRow>
+                        <TableRow
+                            android:weightSum="12"
+                            android:orientation="horizontal">
                             <TextView
                                 android:text="시가"
                                 android:gravity="left"
-                                android:padding="3dp" />
+                                android:layout_width="0dp"
+                                android:textColor="#000000"
+                                android:padding="3dp"
+                                android:layout_weight="2"/>
                             <TextView
                                 android:id="@+id/opening_price"
                                 android:gravity="left"
-                                android:padding="3dp" />
+                                android:textColor="#000000"
+                                android:layout_width="0dp"
+                                android:padding="3dp"
+                                android:layout_weight="4"/>
                             <TextView
                                 android:text="배당률"
                                 android:gravity="left"
+                                android:textColor="#000000"
+                                android:layout_width="0dp"
+                                android:layout_weight="2"
                                 android:padding="3dp" />
                             <TextView
                                 android:id="@+id/dividend"
                                 android:gravity="left"
-                                android:padding="3dp" />
+                                android:layout_width="0dp"
+                                android:textColor="#000000"
+                                android:padding="3dp"
+                                android:layout_weight="4"/>
                         </TableRow>
 
-                        <TableRow>
+                        <TableRow
+                            android:weightSum="12"
+                            android:orientation="horizontal">
                             <TextView
                                 android:text="고가"
                                 android:gravity="left"
-                                android:padding="3dip" />
+                                android:layout_width="0dp"
+                                android:textColor="#000000"
+                                android:padding="3dp"
+                                android:layout_weight="2" />
                             <TextView
                                 android:id="@+id/high_price"
                                 android:gravity="left"
-                                android:padding="3dip" />
+                                android:layout_width="0dp"
+                                android:textColor="#000000"
+                                android:padding="3dp"
+                                android:layout_weight="4" />
                             <TextView
                                 android:text="52주 신고가"
                                 android:gravity="left"
-                                android:padding="3dip" />
+                                android:layout_width="0dp"
+                                android:textColor="#000000"
+                                android:padding="3dp"
+                                android:layout_weight="2" />
                             <TextView
                                 android:id="@+id/highest_52_price"
                                 android:gravity="left"
-                                android:padding="3dip" />
+                                android:layout_width="0dp"
+                                android:textColor="#000000"
+                                android:padding="3dp"
+                                android:layout_weight="4" />
                         </TableRow>
-                        <TableRow>
+                        <TableRow
+                            android:weightSum="12"
+                            android:orientation="horizontal">
                             <TextView
                                 android:text="저가"
                                 android:gravity="left"
-                                android:padding="3dip" />
+                                android:layout_width="0dp"
+                                android:textColor="#000000"
+                                android:padding="3dp"
+                                android:layout_weight="2" />
                             <TextView
                                 android:id="@+id/low_price"
                                 android:gravity="left"
-                                android:padding="3dip" />
+                                android:layout_width="0dp"
+                                android:textColor="#000000"
+                                android:padding="3dp"
+                                android:layout_weight="4" />
                             <TextView
                                 android:text="52주 신저가"
                                 android:gravity="left"
-                                android:padding="3dip" />
+                                android:layout_width="0dp"
+                                android:textColor="#000000"
+                                android:padding="3dp"
+                                android:layout_weight="2" />
                             <TextView
                                 android:id="@+id/lowest_52_price"
                                 android:gravity="left"
-                                android:padding="3dip" />
+                                android:layout_width="0dp"
+                                android:textColor="#000000"
+                                android:padding="3dp"
+                                android:layout_weight="4" />
                         </TableRow>
-                        <TableRow>
+                        <TableRow
+                            android:weightSum="12"
+                            android:orientation="horizontal">
                             <TextView
                                 android:text="전일종가"
                                 android:gravity="left"
-                                android:padding="3dip" />
+                                android:layout_width="0dp"
+                                android:textColor="#000000"
+                                android:padding="3dp"
+                                android:layout_weight="2" />
                             <TextView
                                 android:id="@+id/prev_price"
                                 android:gravity="left"
-                                android:padding="3dip" />
+                                android:layout_width="0dp"
+                                android:textColor="#000000"
+                                android:padding="3dp"
+                                android:layout_weight="4" />
                             <TextView
                                 android:text="PBR"
                                 android:gravity="left"
-                                android:padding="3dip" />
+                                android:layout_width="0dp"
+                                android:textColor="#000000"
+                                android:padding="3dp"
+                                android:layout_weight="2" />
                             <TextView
                                 android:id="@+id/pbr"
                                 android:gravity="left"
-                                android:padding="3dip" />
+                                android:layout_width="0dp"
+                                android:textColor="#000000"
+                                android:padding="3dp"
+                                android:layout_weight="4" />
                         </TableRow>
-                        <TableRow>
+                        <TableRow
+                            android:weightSum="12"
+                            android:orientation="horizontal">
                             <TextView
                                 android:text="PER"
                                 android:gravity="left"
-                                android:padding="3dip" />
+                                android:layout_width="0dp"
+                                android:textColor="#000000"
+                                android:padding="3dp"
+                                android:layout_weight="2"/>
                             <TextView
                                 android:id="@+id/per"
                                 android:gravity="left"
-                                android:padding="3dip" />
+                                android:layout_width="0dp"
+                                android:textColor="#000000"
+                                android:padding="3dp"
+                                android:layout_weight="4"/>
                             <TextView
                                 android:text="EPS"
                                 android:gravity="left"
-                                android:padding="3dip" />
+                                android:layout_width="0dp"
+                                android:textColor="#000000"
+                                android:padding="3dp"
+                                android:layout_weight="2" />
                             <TextView
                                 android:id="@+id/eps"
                                 android:gravity="left"
-                                android:padding="3dip" />
+                                android:layout_width="0dp"
+                                android:textColor="#000000"
+                                android:padding="3dp"
+                                android:layout_weight="4" />
                         </TableRow>
                     </TableLayout>
                 </LinearLayout>
