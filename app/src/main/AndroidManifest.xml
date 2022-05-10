@@ -38,8 +38,11 @@
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+
+                <data
+                    android:host="yourcustomhost"
+                    android:scheme="yourcustomscheme" />
             </intent-filter>
         </activity>
         <activity android:name=".CryptoActivity">

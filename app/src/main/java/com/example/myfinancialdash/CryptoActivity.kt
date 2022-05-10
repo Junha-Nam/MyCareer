@@ -30,7 +30,6 @@ class CryptoActivity : FragmentActivity() {
     private var jobSearch: Job? = null
     private var jobDashboard: Job? =null
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
         setContentView(binding.root )
 
@@ -68,8 +67,10 @@ class CryptoActivity : FragmentActivity() {
                     if (usdIndexSearchBody != null) {
                         for (i in usdIndexSearchBody) {
                             if (i.reutersCode == ".IXIC") {
-                                binding.NasdaqPrice.text = i.closePrice
-                                binding.NasdaqRate.text = i.fluctuationsRatio
+                                runOnUiThread {
+                                    binding.NasdaqPrice.text = i.closePrice
+                                    binding.NasdaqRate.text = i.fluctuationsRatio
+                                }
                                 break
                             }
                         }
@@ -80,8 +81,10 @@ class CryptoActivity : FragmentActivity() {
                     if (dollarIndexSearchBody != null) {
                         for (i in dollarIndexSearchBody) {
                             if (i.symbolCode == "USD") {
-                                binding.dollarPrice.text = i.closePrice
-                                binding.dollarRate.text = i.fluctuationsRatio
+                                runOnUiThread {
+                                    binding.dollarPrice.text = i.closePrice
+                                    binding.dollarRate.text = i.fluctuationsRatio
+                                }
                                 break
                             }
                         }
@@ -91,19 +94,27 @@ class CryptoActivity : FragmentActivity() {
 
 
                     //price와 rate를 뿌려준다.
-                    binding.krwBtcPrice.text = cryptoKorBitBody?.get(0)?.trade_price.toString()
-                    binding.krwBtcRate.text = cryptoKorBitBody?.get(0)?.signed_change_rate.toString()
-                    binding.krwEthPrice.text = cryptoKorEthBody?.get(0)?.trade_price.toString()
-                    binding.krwEthRate.text = cryptoKorEthBody?.get(0)?.signed_change_rate.toString()
-                    binding.krwDogPrice.text = cryptoKorDogBody?.get(0)?.trade_price.toString()
-                    binding.krwDogRate.text = cryptoKorDogBody?.get(0)?.signed_change_rate.toString()
+                    runOnUiThread {
+                        binding.krwBtcPrice.text = cryptoKorBitBody?.get(0)?.trade_price.toString()
+                        binding.krwBtcRate.text =
+                            cryptoKorBitBody?.get(0)?.signed_change_rate.toString()
+                        binding.krwEthPrice.text = cryptoKorEthBody?.get(0)?.trade_price.toString()
+                        binding.krwEthRate.text =
+                            cryptoKorEthBody?.get(0)?.signed_change_rate.toString()
+                        binding.krwDogPrice.text = cryptoKorDogBody?.get(0)?.trade_price.toString()
+                        binding.krwDogRate.text =
+                            cryptoKorDogBody?.get(0)?.signed_change_rate.toString()
 
-                    binding.usdBtcPrice.text = cryptoUsdBitBody?.get(0)?.trade_price.toString()
-                    binding.usdBtcRate.text = cryptoUsdBitBody?.get(0)?.signed_change_rate.toString()
-                    binding.usdEthPrice.text = cryptoUsdEthBody?.get(0)?.trade_price.toString()
-                    binding.usdEthRate.text = cryptoUsdEthBody?.get(0)?.signed_change_rate.toString()
-                    binding.usdDogPrice.text = cryptoUsdDogBody?.get(0)?.trade_price.toString()
-                    binding.usdDogRate.text = cryptoUsdDogBody?.get(0)?.signed_change_rate.toString()
+                        binding.usdBtcPrice.text = cryptoUsdBitBody?.get(0)?.trade_price.toString()
+                        binding.usdBtcRate.text =
+                            cryptoUsdBitBody?.get(0)?.signed_change_rate.toString()
+                        binding.usdEthPrice.text = cryptoUsdEthBody?.get(0)?.trade_price.toString()
+                        binding.usdEthRate.text =
+                            cryptoUsdEthBody?.get(0)?.signed_change_rate.toString()
+                        binding.usdDogPrice.text = cryptoUsdDogBody?.get(0)?.trade_price.toString()
+                        binding.usdDogRate.text =
+                            cryptoUsdDogBody?.get(0)?.signed_change_rate.toString()
+                    }
 
                     countTest += 1
 
@@ -130,6 +141,8 @@ class CryptoActivity : FragmentActivity() {
                 korean_name = "비트코인"
             } else if (search_name == "b") {
                 korean_name = "이더리움"
+            } else {
+                korean_name = search_name
             }
             val retrofitCryptoSearch = RetrofitInstance_Crypto
             var searchMarket = ""

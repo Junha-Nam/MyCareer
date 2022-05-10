@@ -1,0 +1,125 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.kt.gigagenie",
+    "module": "geniesdk",
+    "version": "1.1.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "7.0.2"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-jdk8",
+          "version": {
+            "requires": "1.5.31"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "geniesdk-1.1.0.aar",
+          "url": "geniesdk-1.1.0.aar",
+          "size": 92074,
+          "sha512": "5a9249aef2e30c7f051c33eff91afc9f3c65dac24eb603459e03b2882c2d91b4d34e3eeea2382e2127aaad05dc7cbc7605f62c23989b6359c64c84a66921ce43",
+          "sha256": "fc384fd64bb5a8ddfd290967edd31cc8ac3b1a6a820f716d20fd599b08e80cf8",
+          "sha1": "c13090a96b2c5e850a4f530ae3b91a3f4119e5db",
+          "md5": "316ab12ab0875dd33039d9a3e7897b9d"
+        }
+      ]
+    },
+    {
+      "name": "releaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-jdk8",
+          "version": {
+            "requires": "1.5.31"
+          }
+        },
+        {
+          "group": "androidx.core",
+          "module": "core-ktx",
+          "version": {
+            "requires": "1.6.0"
+          }
+        },
+        {
+          "group": "androidx.appcompat",
+          "module": "appcompat",
+          "version": {
+            "requires": "1.3.1"
+          }
+        },
+        {
+          "group": "com.google.android.material",
+          "module": "material",
+          "version": {
+            "requires": "1.4.0"
+          }
+        },
+        {
+          "group": "com.google.code.gson",
+          "module": "gson",
+          "version": {
+            "requires": "2.8.8"
+          }
+        },
+        {
+          "group": "com.squareup.retrofit2",
+          "module": "converter-gson",
+          "version": {
+            "requires": "2.9.0"
+          }
+        },
+        {
+          "group": "com.squareup.okhttp3",
+          "module": "logging-interceptor",
+          "version": {
+            "requires": "4.9.1"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-android",
+          "version": {
+            "requires": "1.5.1"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "geniesdk-1.1.0.aar",
+          "url": "geniesdk-1.1.0.aar",
+          "size": 92074,
+          "sha512": "5a9249aef2e30c7f051c33eff91afc9f3c65dac24eb603459e03b2882c2d91b4d34e3eeea2382e2127aaad05dc7cbc7605f62c23989b6359c64c84a66921ce43",
+          "sha256": "fc384fd64bb5a8ddfd290967edd31cc8ac3b1a6a820f716d20fd599b08e80cf8",
+          "sha1": "c13090a96b2c5e850a4f530ae3b91a3f4119e5db",
+          "md5": "316ab12ab0875dd33039d9a3e7897b9d"
+        }
+      ]
+    }
+  ]
+}

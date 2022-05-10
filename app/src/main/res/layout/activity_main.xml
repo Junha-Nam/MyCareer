@@ -8,9 +8,9 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     tools:deviceIds="tv"
+    android:padding="10dp"
     tools:ignore="MergeRootFrame"
-    android:orientation="vertical"
-    android:background="#FFFFFF">
+    android:orientation="vertical">
 
 
     <LinearLayout
@@ -42,7 +42,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="5">
+                android:layout_weight="4">
             </LinearLayout>
             <Button
                 android:id="@+id/button_crypto"
@@ -50,6 +50,16 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Crypto" />
+
+            <Button
+                android:id="@+id/getVoiceTextButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="음성 인식 시작"
+                android:textAllCaps="false"
+                android:textSize="12sp"
+                android:layout_weight="1"
+                />
 
         </LinearLayout>
 
@@ -169,13 +179,13 @@
                                 android:textColor="#000000"
                                 android:layout_width="0dp"
                                 android:padding="3dp"
-                                android:layout_weight="4"/>
+                                android:layout_weight="3"/>
                             <TextView
                                 android:text="배당률"
                                 android:gravity="left"
                                 android:textColor="#000000"
                                 android:layout_width="0dp"
-                                android:layout_weight="2"
+                                android:layout_weight="3"
                                 android:padding="3dp" />
                             <TextView
                                 android:id="@+id/dividend"
@@ -202,14 +212,14 @@
                                 android:layout_width="0dp"
                                 android:textColor="#000000"
                                 android:padding="3dp"
-                                android:layout_weight="4" />
+                                android:layout_weight="3" />
                             <TextView
                                 android:text="52주 신고가"
                                 android:gravity="left"
                                 android:layout_width="0dp"
                                 android:textColor="#000000"
                                 android:padding="3dp"
-                                android:layout_weight="2" />
+                                android:layout_weight="3" />
                             <TextView
                                 android:id="@+id/highest_52_price"
                                 android:gravity="left"
@@ -234,14 +244,14 @@
                                 android:layout_width="0dp"
                                 android:textColor="#000000"
                                 android:padding="3dp"
-                                android:layout_weight="4" />
+                                android:layout_weight="3" />
                             <TextView
                                 android:text="52주 신저가"
                                 android:gravity="left"
                                 android:layout_width="0dp"
                                 android:textColor="#000000"
                                 android:padding="3dp"
-                                android:layout_weight="2" />
+                                android:layout_weight="3" />
                             <TextView
                                 android:id="@+id/lowest_52_price"
                                 android:gravity="left"
@@ -266,14 +276,14 @@
                                 android:layout_width="0dp"
                                 android:textColor="#000000"
                                 android:padding="3dp"
-                                android:layout_weight="4" />
+                                android:layout_weight="3" />
                             <TextView
                                 android:text="PBR"
                                 android:gravity="left"
                                 android:layout_width="0dp"
                                 android:textColor="#000000"
                                 android:padding="3dp"
-                                android:layout_weight="2" />
+                                android:layout_weight="3" />
                             <TextView
                                 android:id="@+id/pbr"
                                 android:gravity="left"
@@ -298,14 +308,14 @@
                                 android:layout_width="0dp"
                                 android:textColor="#000000"
                                 android:padding="3dp"
-                                android:layout_weight="4"/>
+                                android:layout_weight="3"/>
                             <TextView
                                 android:text="EPS"
                                 android:gravity="left"
                                 android:layout_width="0dp"
                                 android:textColor="#000000"
                                 android:padding="3dp"
-                                android:layout_weight="2" />
+                                android:layout_weight="3" />
                             <TextView
                                 android:id="@+id/eps"
                                 android:gravity="left"

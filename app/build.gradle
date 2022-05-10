@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.myfinancialdash"
-        minSdk 21
+        minSdk 23
         targetSdk 32
         versionCode 1
         versionName "1.0"
@@ -56,5 +56,8 @@ dependencies {
 
     // chart
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+    //genie sdk
+    implementation 'com.kt.gigagenie:geniesdk:1.1.0'
 
 }

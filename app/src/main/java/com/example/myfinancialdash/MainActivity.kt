@@ -7,6 +7,7 @@ import android.graphics.Paint
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import com.example.myfinancialdash.api.*
@@ -20,6 +21,10 @@ import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.CandleData
 import com.github.mikephil.charting.data.CandleDataSet
 import com.github.mikephil.charting.data.CandleEntry
+import com.kt.gigagenie.geniesdk.GenieSdk
+import com.kt.gigagenie.geniesdk.GenieSdkEventListener
+import com.kt.gigagenie.geniesdk.data.model.Response
+import com.kt.gigagenie.geniesdk.service.VoiceService
 import kotlinx.coroutines.*
 
 
@@ -31,6 +36,18 @@ class MainActivity : FragmentActivity() {
     private var jobDashboard: Job? =null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        GenieSdk.init(
+            this,
+            "N5004418",
+            "TjUwMDQ0MTh8R0JPWERFVk18MTY1MjA4MDExMDY4Nw==",
+            true,
+            object : GenieSdkEventListener {
+                override fun callback(result: Response) {
+                    Log.i("[GenieSDKSample]", "result: $result")
+                }
+            }
+        )
 
         super.onCreate(savedInstanceState)
         setContentView(binding.root )
@@ -55,7 +72,7 @@ class MainActivity : FragmentActivity() {
 
         jobDashboard = CoroutineScope(Dispatchers.IO).launch {
             try {
-                while(true) {
+                while(false) {
                     // 값 가져오기
                     val korIndexSearch = RetrofitInstanceIndexStock.api.getKorIndex()
                     val usdIndexSearch = RetrofitInstanceIndexStock.api.getUsdIndex()
@@ -72,11 +89,15 @@ class MainActivity : FragmentActivity() {
                     if (korIndexSearchBody != null) {
                         for (i in korIndexSearchBody) {
                             if (i.itemCode == "KOSPI") {
-                                binding.kospiIndex.text = i.closePrice
-                                binding.kospiRate.text = i.fluctuationsRatio
+                                runOnUiThread {
+                                    binding.kospiIndex.text = i.closePrice
+                                    binding.kospiRate.text = i.fluctuationsRatio
+                                }
                             } else if (i.itemCode == "KOSDAQ") {
-                                binding.kosdaqIndex.text = i.closePrice
-                                binding.kosdaqRate.text = i.fluctuationsRatio
+                                runOnUiThread {
+                                    binding.kosdaqIndex.text = i.closePrice
+                                    binding.kosdaqRate.text = i.fluctuationsRatio
+                                }
                             }
                         }
                     }
@@ -85,14 +106,20 @@ class MainActivity : FragmentActivity() {
                     if (usdIndexSearchBody != null) {
                         for (i in usdIndexSearchBody) {
                             if (i.reutersCode == ".DJI") {
-                                binding.dowPrice.text = i.closePrice
-                                binding.dowRate.text = i.fluctuationsRatio
+                                runOnUiThread {
+                                    binding.dowPrice.text = i.closePrice
+                                    binding.dowRate.text = i.fluctuationsRatio
+                                }
                             } else if (i.reutersCode == ".IXIC") {
-                                binding.NasdaqPrice.text = i.closePrice
-                                binding.NasdaqRate.text = i.fluctuationsRatio
+                                runOnUiThread {
+                                    binding.NasdaqPrice.text = i.closePrice
+                                    binding.NasdaqRate.text = i.fluctuationsRatio
+                                }
                             } else if (i.reutersCode == ".INX") {
-                                binding.snp500Price.text = i.closePrice
-                                binding.snp500Rate.text = i.fluctuationsRatio
+                                runOnUiThread {
+                                    binding.snp500Price.text = i.closePrice
+                                    binding.snp500Rate.text = i.fluctuationsRatio
+                                }
                             }
 
                         }
@@ -103,8 +130,10 @@ class MainActivity : FragmentActivity() {
                     if (dollarIndexSearchBody != null) {
                         for (i in dollarIndexSearchBody) {
                             if (i.symbolCode == "USD") {
-                                binding.dollarPrice.text = i.closePrice
-                                binding.dollarRate.text = i.fluctuationsRatio
+                                runOnUiThread {
+                                    binding.dollarPrice.text = i.closePrice
+                                    binding.dollarRate.text = i.fluctuationsRatio
+                                }
                                 break
                             }
                         }
@@ -113,8 +142,10 @@ class MainActivity : FragmentActivity() {
                     if (bondIndexSearchBody != null) {
                         for (i in bondIndexSearchBody) {
                             if (i.reutersCode == "US10YT=RR") {
-                                binding.bondPrice.text = i.closePrice
-                                binding.bondRate.text = i.fluctuationsRatio
+                                runOnUiThread {
+                                    binding.bondPrice.text = i.closePrice
+                                    binding.bondRate.text = i.fluctuationsRatio
+                                }
                                 break
                             }
                         }
@@ -149,15 +180,21 @@ class MainActivity : FragmentActivity() {
         val retrofitInstanceKorStockChart = RetrofitInstance_KorStockChart
         val retrofitInstanceKorStockDetail = RetrofitInstance_KorStockDetail
         val retrofitInstanceUsdStock = RetrofitInstance_USDStock
+
+
+
+
         binding.searchStock.setOnClickListener{
             jobSearch?.cancel()
             // 1. 검색을 한다. 한국 미국 양쪽에서
             val search_name = binding.editStock.text.toString()
             var korean_name = ""
-            if(search_name == "a") {
+            if(search_name == "1") {
                 korean_name = "애플"
-            } else if (search_name == "b") {
+            } else if (search_name == "2") {
                 korean_name = "삼성전자"
+            } else {
+                korean_name = search_name
             }
             // 2. 검색결과가 없거나 두개 이상이면 올바르게 검색해달라고 얘기하고 종료
             //     else이면 이제 동작.
@@ -172,7 +209,7 @@ class MainActivity : FragmentActivity() {
                     var isTrue = 0
                     if (stockSearchBody != null) {
                         for (i in stockSearchBody) {
-                            if (i.name == korean_name) {
+                            if (i.name == korean_name || i.name.contains(korean_name + " Class")) {
                                 reutersCode = i.reutersCode
                                 korean_name = i.name
                                 nation = i.nationName
@@ -203,8 +240,9 @@ class MainActivity : FragmentActivity() {
                                 setChartDataKor(korStockChartBody)
                             }
                             // 한국 상세
-
-                            binding.stockName.text = korean_name
+                            runOnUiThread {
+                                binding.stockName.text = korean_name
+                            }
                             var count = 0
                             // 3-1. 표에 뿌리기
                             while (true) {
@@ -261,8 +299,9 @@ class MainActivity : FragmentActivity() {
                             }
 
                             //미국 상세
-
-                            binding.stockName.text = korean_name
+                            runOnUiThread {
+                                binding.stockName.text = korean_name
+                            }
                             var count = 0
                             // 3-1. 표에 뿌리기
                             while (true) {
@@ -333,6 +372,21 @@ class MainActivity : FragmentActivity() {
 
         }
 
+        binding.getVoiceTextButton.setOnClickListener {
+            VoiceService.instance.getVoiceText(listener = object : GenieSdkEventListener {
+                override fun callback(result: Response) {
+                    Log.d("testing", "* resultCode: ${result.resultCode}\n* resultMsg: ${result.resultMsg}\n* extra: ${result.extra}")
+                    val resultTest = result.extra.get("sttResult").toString().replace("\"","")
+                    Log.d("testing", resultTest)
+                    if(result.resultCode == 200) {
+                        binding.editStock.setText(resultTest)
+                    } else {
+                        Toast.makeText(applicationContext,"다시 음성인식 해주세요", Toast.LENGTH_SHORT).show()
+                    }
+
+                }
+            })
+        }
         // crypto로 화면전환
         binding.buttonCrypto.setOnClickListener{
             jobDashboard?.cancel()
@@ -350,6 +404,13 @@ class MainActivity : FragmentActivity() {
         // 권한 승인에 관한 내용..
 
 
+
+    }
+
+    override fun onDestroy() {
+        Log.d("DestroyCheck", "파괴")
+        super.onDestroy()
+        GenieSdk.deinit()
 
     }
 
@@ -470,6 +531,8 @@ class MainActivity : FragmentActivity() {
             this.data = CandleData(priceDataSet)
             invalidate()
         }
+
+
     }
 
 
