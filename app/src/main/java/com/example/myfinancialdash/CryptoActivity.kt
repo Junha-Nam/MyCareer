@@ -266,7 +266,7 @@ class CryptoActivity : FragmentActivity() {
                         } else if (resultTest.contains("종료") || resultTest.contains("꺼줘")){
                             finish()
                         } else if(resultTest.contains("검색")){
-                            resultTest = resultTest.split("검색").get(0).replace(" ","")
+                            resultTest = resultTest.split("검색").get(0).trim()
                             binding.editCrypto.setText(resultTest)
                             binding.searchCrpyto.callOnClick()
                         } else {

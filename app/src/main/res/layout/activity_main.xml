@@ -101,7 +101,8 @@
                         android:id="@+id/search_stock"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight="1
+"
                         android:enabled="false"
                         android:text="Button" />
 
