@@ -361,18 +361,21 @@ class MainActivity : FragmentActivity() {
         }
 
         binding.getVoiceTextButton.setOnClickListener {
-            var test = ""
             VoiceService.instance.getVoiceText(listener = object : GenieSdkEventListener {
                 override fun callback(result: Response) {
                     Log.d("testing", "* resultCode: ${result.resultCode}\n* resultMsg: ${result.resultMsg}\n* extra: ${result.extra}")
 
                     if(result.resultCode == 200) {
-                        val resultTest = result.extra.get("sttResult").toString().replace("\"","")
+                        var resultTest = result.extra.get("sttResult").toString().replace("\"","")
                         Log.d("testing", resultTest)
                         if(resultTest.contains("화면")) {
                             binding.buttonCrypto.callOnClick()
-                        } else if (resultTest.contains("종료")){
+                        } else if (resultTest.contains("종료") || resultTest.contains("꺼줘")){
                             finish()
+                        } else if(resultTest.contains("검색")){
+                            resultTest = resultTest.split("검색").get(0).replace(" ","")
+                            binding.editStock.setText(resultTest)
+                            binding.searchStock.callOnClick()
                         } else {
                             binding.editStock.setText(resultTest)
                             binding.searchStock.callOnClick()

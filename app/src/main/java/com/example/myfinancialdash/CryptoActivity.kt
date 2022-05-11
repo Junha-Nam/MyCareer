@@ -259,12 +259,16 @@ class CryptoActivity : FragmentActivity() {
                     Log.d("testing", "* resultCode: ${result.resultCode}\n* resultMsg: ${result.resultMsg}\n* extra: ${result.extra}")
 
                     if(result.resultCode == 200) {
-                        val resultTest = result.extra.get("sttResult").toString().replace("\"","")
+                        var resultTest = result.extra.get("sttResult").toString().replace("\"","")
                         Log.d("testing", resultTest)
                         if(resultTest.contains("화면")) {
                             binding.buttonStock.callOnClick()
-                        } else if (resultTest.contains("종료")){
+                        } else if (resultTest.contains("종료") || resultTest.contains("꺼줘")){
                             finish()
+                        } else if(resultTest.contains("검색")){
+                            resultTest = resultTest.split("검색").get(0).replace(" ","")
+                            binding.editCrypto.setText(resultTest)
+                            binding.searchCrpyto.callOnClick()
                         } else {
                             binding.editCrypto.setText(resultTest)
                             binding.searchCrpyto.callOnClick()
