@@ -37,18 +37,6 @@ class MainActivity : FragmentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        GenieSdk.init(
-            this,
-            "N5004418",
-            "TjUwMDQ0MTh8R0JPWERFVk18MTY1MjA4MDExMDY4Nw==",
-            true,
-            object : GenieSdkEventListener {
-                override fun callback(result: Response) {
-                    Log.i("[GenieSDKSample]", "result: $result")
-                }
-            }
-        )
-
         super.onCreate(savedInstanceState)
         setContentView(binding.root )
 
@@ -72,7 +60,7 @@ class MainActivity : FragmentActivity() {
 
         jobDashboard = CoroutineScope(Dispatchers.IO).launch {
             try {
-                while(false) {
+                while(true) {
                     // 값 가져오기
                     val korIndexSearch = RetrofitInstanceIndexStock.api.getKorIndex()
                     val usdIndexSearch = RetrofitInstanceIndexStock.api.getUsdIndex()
@@ -373,19 +361,30 @@ class MainActivity : FragmentActivity() {
         }
 
         binding.getVoiceTextButton.setOnClickListener {
+            var test = ""
             VoiceService.instance.getVoiceText(listener = object : GenieSdkEventListener {
                 override fun callback(result: Response) {
                     Log.d("testing", "* resultCode: ${result.resultCode}\n* resultMsg: ${result.resultMsg}\n* extra: ${result.extra}")
-                    val resultTest = result.extra.get("sttResult").toString().replace("\"","")
-                    Log.d("testing", resultTest)
+
                     if(result.resultCode == 200) {
-                        binding.editStock.setText(resultTest)
+                        val resultTest = result.extra.get("sttResult").toString().replace("\"","")
+                        Log.d("testing", resultTest)
+                        if(resultTest.contains("화면")) {
+                            binding.buttonCrypto.callOnClick()
+                        } else if (resultTest.contains("종료")){
+                            finish()
+                        } else {
+                            binding.editStock.setText(resultTest)
+                            binding.searchStock.callOnClick()
+                        }
+
                     } else {
                         Toast.makeText(applicationContext,"다시 음성인식 해주세요", Toast.LENGTH_SHORT).show()
                     }
 
                 }
             })
+
         }
         // crypto로 화면전환
         binding.buttonCrypto.setOnClickListener{
@@ -393,11 +392,7 @@ class MainActivity : FragmentActivity() {
             jobSearch?.cancel()
             val nextIntent = Intent(this, CryptoActivity::class.java)
             startActivity(nextIntent)
-            println("넘어가도 동작해?")
             finish()
-            println("stop이후도 동작해?")
-
-
 
         }
 
@@ -407,12 +402,7 @@ class MainActivity : FragmentActivity() {
 
     }
 
-    override fun onDestroy() {
-        Log.d("DestroyCheck", "파괴")
-        super.onDestroy()
-        GenieSdk.deinit()
 
-    }
 
     fun initChart() {
         binding.apply {

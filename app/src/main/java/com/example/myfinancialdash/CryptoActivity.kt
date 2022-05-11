@@ -6,6 +6,7 @@ import android.graphics.Paint
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import com.example.myfinancialdash.MainActivity
@@ -15,25 +16,29 @@ import com.example.myfinancialdash.api.RetrofitInstance_Dollar
 import com.example.myfinancialdash.api.RetrofitInstance_IndexStock
 import com.example.myfinancialdash.data.cryptochart.CryptoChart
 import com.example.myfinancialdash.databinding.ActivityCryptoBinding
+import com.example.myfinancialdash.databinding.ActivityMainBinding
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.CandleData
 import com.github.mikephil.charting.data.CandleDataSet
 import com.github.mikephil.charting.data.CandleEntry
+import com.kt.gigagenie.geniesdk.GenieSdk
+import com.kt.gigagenie.geniesdk.GenieSdkEventListener
+import com.kt.gigagenie.geniesdk.data.model.Response
+import com.kt.gigagenie.geniesdk.service.VoiceService
 import kotlinx.coroutines.*
 
 
 class CryptoActivity : FragmentActivity() {
 
     val binding by lazy { ActivityCryptoBinding.inflate(layoutInflater) }
-
+    val activity = MainActivity()
     private var jobSearch: Job? = null
     private var jobDashboard: Job? =null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root )
 
-        
         // 여기는 우측 대시보드. 즉, 실시간으로 계속 새로고침? 갱신 이 되어야 하는 곳이야. 
         var countTest = 0
         val retrofitDashboard = RetrofitInstance_Crypto
@@ -189,8 +194,9 @@ class CryptoActivity : FragmentActivity() {
 
                         // 3. 세부정보 가져와 표에 뿌리기
                         // 여기 부분이 무한루프가 돌아야됨. 재 검색 버튼을 누르거나, 화면이 넘어갈때 초기화.
-
-                        binding.cryptoName.text = korean_name
+                        runOnUiThread {
+                            binding.cryptoName.text = korean_name
+                        }
                         var count = 0
                         // 3-1. 표에 뿌리기
                         while (true) {
@@ -242,7 +248,34 @@ class CryptoActivity : FragmentActivity() {
             jobDashboard?.cancel()
             val nextIntent = Intent(this, MainActivity::class.java)
             startActivity(nextIntent)
+            finish()
 
+        }
+
+        binding.getVoiceTextButton.setOnClickListener {
+
+            VoiceService.instance.getVoiceText(listener = object : GenieSdkEventListener {
+                override fun callback(result: Response) {
+                    Log.d("testing", "* resultCode: ${result.resultCode}\n* resultMsg: ${result.resultMsg}\n* extra: ${result.extra}")
+
+                    if(result.resultCode == 200) {
+                        val resultTest = result.extra.get("sttResult").toString().replace("\"","")
+                        Log.d("testing", resultTest)
+                        if(resultTest.contains("화면")) {
+                            binding.buttonStock.callOnClick()
+                        } else if (resultTest.contains("종료")){
+                            finish()
+                        } else {
+                            binding.editCrypto.setText(resultTest)
+                            binding.searchCrpyto.callOnClick()
+                        }
+
+                    } else {
+                        Toast.makeText(applicationContext,"다시 음성인식 해주세요", Toast.LENGTH_SHORT).show()
+                    }
+
+                }
+            })
         }
     }
 
