@@ -11,17 +11,14 @@ import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import com.example.myfinancialdash.api.*
-import com.example.myfinancialdash.data.cryptochart.CryptoChart
 import com.example.myfinancialdash.data.korstockchart.KorStockChart
 import com.example.myfinancialdash.data.usdstockchart.UsdStockChart
-//import com.example.myfinancialdash.api.RetrofitInstance
 import com.example.myfinancialdash.databinding.ActivityMainBinding
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.CandleData
 import com.github.mikephil.charting.data.CandleDataSet
 import com.github.mikephil.charting.data.CandleEntry
-import com.kt.gigagenie.geniesdk.GenieSdk
 import com.kt.gigagenie.geniesdk.GenieSdkEventListener
 import com.kt.gigagenie.geniesdk.data.model.Response
 import com.kt.gigagenie.geniesdk.service.VoiceService
@@ -37,37 +34,40 @@ class MainActivity : FragmentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
+
         super.onCreate(savedInstanceState)
         setContentView(binding.root )
 
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 사실 구조는 되게 단순하다.
-        // 1. 레트로핏을 써서 API에서 값을 가져온다. 갖고온 값을 뿌려준다. (우측화면)
-        // 2. EditText에 값을 입력하고 검색을 했을 때, 세부내역 검색 내용이 돌면서 좌측에 값이 표시되고 몇 가지 값이 갱신된다.
+
+
+        // 1. 레트로핏을 써서 API 값을 가져온다. 갖고온 값을 뿌려준다. (우측화면)
+        // 2. EditText 값을 입력하고 검색을 했을 때, 세부내역 검색 내용이 돌면서 좌측에 값이 표시되고 몇 가지 값이 갱신된다.
         //    그럼 얘도 코루틴에서 값이 돌아야겠지?
         //
-        // 그래서 Idea를 내면.. 반복문에는 우측 갱신 + Pointing 변수 값에 내용이 들어왔을 때 세부내역 중에서 갱신해야 되는 부분을 가져오는 ..
+        // 그래서 Idea 내면.. 반복문에는 우측 갱신 + Pointing 변수 값에 내용이 들어왔을 때 세부내역 중에서 갱신해야 되는 부분을 가져오는 ..
         // 1초에 한번 진행하면서 안멈추면 낮추자 초를..
-        // 이 똑같은 구조를 Crypto에서 한번 더 반복하면 됨.
+        // 이 똑같은 구조를 Crypto 한번 더 반복하면 됨.
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
         // 대시보드 만들기
-        val RetrofitInstanceIndexStock = RetrofitInstance_IndexStock
-        val RetrifitInstanceDollar = RetrofitInstance_Dollar
-        val RetrofitInstanceBond = RetrofitInstance_Bond
+        val retrofitInstanceIndexStock = RetrofitInstance_IndexStock
+        val retrofitInstanceDollar = RetrofitInstance_Dollar
+        val retrofitInstanceBond = RetrofitInstance_Bond
 
         jobDashboard = CoroutineScope(Dispatchers.IO).launch {
             try {
                 while(true) {
                     // 값 가져오기
-                    val korIndexSearch = RetrofitInstanceIndexStock.api.getKorIndex()
-                    val usdIndexSearch = RetrofitInstanceIndexStock.api.getUsdIndex()
-                    val dollarIndexSearch = RetrifitInstanceDollar.api.getIndexDollar()
-                    val bondIndexSearch = RetrofitInstanceBond.api.getIndexBond()
+                    val korIndexSearch = retrofitInstanceIndexStock.api.getKorIndex()
+                    val usdIndexSearch = retrofitInstanceIndexStock.api.getUsdIndex()
+                    val dollarIndexSearch = retrofitInstanceDollar.api.getIndexDollar()
+                    val bondIndexSearch = retrofitInstanceBond.api.getIndexBond()
 
-                    // data에서 필요부분만 뽑아내기
+                    // data 필요부분만 뽑아내기
                     val korIndexSearchBody = korIndexSearch.body()?.datas
                     val usdIndexSearchBody = usdIndexSearch.body()?.datas
                     val dollarIndexSearchBody = dollarIndexSearch.body()
@@ -76,15 +76,30 @@ class MainActivity : FragmentActivity() {
                     // 코스피 코스닥
                     if (korIndexSearchBody != null) {
                         for (i in korIndexSearchBody) {
-                            if (i.itemCode == "KOSPI") {
-                                runOnUiThread {
-                                    binding.kospiIndex.text = i.closePrice
-                                    binding.kospiRate.text = i.fluctuationsRatio
+//                            if (i.itemCode == "KOSPI") {
+//                                runOnUiThread {
+//                                    binding.kospiIndex.text = i.closePrice
+//                                    binding.kospiRate.text = i.fluctuationsRatio
+//                                }
+//                            } else if (i.itemCode == "KOSDAQ") {
+//                                runOnUiThread {
+//                                    binding.kosdaqIndex.text = i.closePrice
+//                                    binding.kosdaqRate.text = i.fluctuationsRatio
+//                                }
+//                            }
+                            when(i.itemCode) {
+                                "KOSPI" -> {
+                                    runOnUiThread {
+                                        binding.kospiIndex.text = i.closePrice
+                                        binding.kospiRate.text = i.fluctuationsRatio
+                                    }
                                 }
-                            } else if (i.itemCode == "KOSDAQ") {
-                                runOnUiThread {
-                                    binding.kosdaqIndex.text = i.closePrice
-                                    binding.kosdaqRate.text = i.fluctuationsRatio
+                                "KOSDAQ" -> {
+                                    runOnUiThread {
+                                        binding.kosdaqIndex.text = i.closePrice
+                                        binding.kosdaqRate.text = i.fluctuationsRatio
+                                    }
+
                                 }
                             }
                         }
@@ -93,20 +108,40 @@ class MainActivity : FragmentActivity() {
                     // snp500 나스닥 다우존스
                     if (usdIndexSearchBody != null) {
                         for (i in usdIndexSearchBody) {
-                            if (i.reutersCode == ".DJI") {
-                                runOnUiThread {
-                                    binding.dowPrice.text = i.closePrice
-                                    binding.dowRate.text = i.fluctuationsRatio
+//                            if (i.reutersCode == ".DJI") {
+//                                runOnUiThread {
+//                                    binding.dowPrice.text = i.closePrice
+//                                    binding.dowRate.text = i.fluctuationsRatio
+//                                }
+//                            } else if (i.reutersCode == ".IXIC") {
+//                                runOnUiThread {
+//                                    binding.NasdaqPrice.text = i.closePrice
+//                                    binding.NasdaqRate.text = i.fluctuationsRatio
+//                                }
+//                            } else if (i.reutersCode == ".INX") {
+//                                runOnUiThread {
+//                                    binding.snp500Price.text = i.closePrice
+//                                    binding.snp500Rate.text = i.fluctuationsRatio
+//                                }
+//                            }
+                            when(i.reutersCode) {
+                                ".DJI" -> {
+                                    runOnUiThread {
+                                        binding.dowPrice.text = i.closePrice
+                                        binding.dowRate.text = i.fluctuationsRatio
+                                    }
                                 }
-                            } else if (i.reutersCode == ".IXIC") {
-                                runOnUiThread {
-                                    binding.NasdaqPrice.text = i.closePrice
-                                    binding.NasdaqRate.text = i.fluctuationsRatio
+                                ".IXIC" -> {
+                                    runOnUiThread {
+                                        binding.NasdaqPrice.text = i.closePrice
+                                        binding.NasdaqRate.text = i.fluctuationsRatio
+                                    }
                                 }
-                            } else if (i.reutersCode == ".INX") {
-                                runOnUiThread {
-                                    binding.snp500Price.text = i.closePrice
-                                    binding.snp500Rate.text = i.fluctuationsRatio
+                                ".INX" -> {
+                                    runOnUiThread {
+                                        binding.snp500Price.text = i.closePrice
+                                        binding.snp500Rate.text = i.fluctuationsRatio
+                                    }
                                 }
                             }
 
@@ -170,20 +205,12 @@ class MainActivity : FragmentActivity() {
         val retrofitInstanceUsdStock = RetrofitInstance_USDStock
 
 
-
-
         binding.searchStock.setOnClickListener{
             jobSearch?.cancel()
             // 1. 검색을 한다. 한국 미국 양쪽에서
-            val search_name = binding.editStock.text.toString()
-            var korean_name = ""
-            if(search_name == "1") {
-                korean_name = "애플"
-            } else if (search_name == "2") {
-                korean_name = "삼성전자"
-            } else {
-                korean_name = search_name
-            }
+            val searchName = binding.editStock.text.toString()
+            var koreanName = searchName
+
             // 2. 검색결과가 없거나 두개 이상이면 올바르게 검색해달라고 얘기하고 종료
             //     else이면 이제 동작.
             var reutersCode = ""
@@ -192,14 +219,14 @@ class MainActivity : FragmentActivity() {
                 try {
                     delay(500)
                     // 1. 한글명으로 MarketCode 찾기
-                    val stockSearch = retrofitInstanceStockSearch.api.getStockSearch(korean_name)
+                    val stockSearch = retrofitInstanceStockSearch.api.getStockSearch(koreanName)
                     val stockSearchBody = stockSearch.body()?.items
                     var isTrue = 0
                     if (stockSearchBody != null) {
                         for (i in stockSearchBody) {
-                            if (i.name == korean_name || i.name.contains(korean_name + " Class")) {
+                            if (i.name == koreanName || i.name.contains("$koreanName Class")) {
                                 reutersCode = i.reutersCode
-                                korean_name = i.name
+                                koreanName = i.name
                                 nation = i.nationName
                                 isTrue = 1
                                 break
@@ -229,7 +256,7 @@ class MainActivity : FragmentActivity() {
                             }
                             // 한국 상세
                             runOnUiThread {
-                                binding.stockName.text = korean_name
+                                binding.stockName.text = koreanName
                             }
                             var count = 0
                             // 3-1. 표에 뿌리기
@@ -288,7 +315,7 @@ class MainActivity : FragmentActivity() {
 
                             //미국 상세
                             runOnUiThread {
-                                binding.stockName.text = korean_name
+                                binding.stockName.text = koreanName
                             }
                             var count = 0
                             // 3-1. 표에 뿌리기
@@ -373,7 +400,7 @@ class MainActivity : FragmentActivity() {
                         } else if (resultTest.contains("종료") || resultTest.contains("꺼줘")){
                             finish()
                         } else if(resultTest.contains("검색")){
-                            resultTest = resultTest.split("검색").get(0).replace(" ","")
+                            resultTest = resultTest.split("검색")[0].replace(" ","")
                             binding.editStock.setText(resultTest)
                             binding.searchStock.callOnClick()
                         } else {
@@ -407,7 +434,7 @@ class MainActivity : FragmentActivity() {
 
 
 
-    fun initChart() {
+    private fun initChart() {
         binding.apply {
             priceChart.setMaxVisibleValueCount(200)
             priceChart.setPinchZoom(false)
@@ -442,11 +469,11 @@ class MainActivity : FragmentActivity() {
     }
 
     // 차트데이터 세팅 함수
-    fun setChartData(candles: UsdStockChart) {
+    private fun setChartData(candles: UsdStockChart) {
         val priceEntries = ArrayList<CandleEntry>()
         var count = 0
-        val candles_loop = candles.priceInfos
-        for (candle in candles_loop) {
+        val candlesLoop = candles.priceInfos
+        for (candle in candlesLoop) {
             // 캔들 차트 entry 생성
             priceEntries.add(
                 CandleEntry(
@@ -484,11 +511,11 @@ class MainActivity : FragmentActivity() {
         }
     }
 
-    fun setChartDataKor(candles: KorStockChart) {
+    private fun setChartDataKor(candles: KorStockChart) {
         val priceEntries = ArrayList<CandleEntry>()
         var count = 0
-        val candles_loop = candles.priceInfos
-        for (candle in candles_loop) {
+        val candlesLoop = candles.priceInfos
+        for (candle in candlesLoop) {
             // 캔들 차트 entry 생성
             priceEntries.add(
                 CandleEntry(

@@ -9,20 +9,16 @@ import android.os.Looper
 import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
-import com.example.myfinancialdash.MainActivity
-import com.example.myfinancialdash.api.RetrofitInstance_Bond
 import com.example.myfinancialdash.api.RetrofitInstance_Crypto
 import com.example.myfinancialdash.api.RetrofitInstance_Dollar
 import com.example.myfinancialdash.api.RetrofitInstance_IndexStock
 import com.example.myfinancialdash.data.cryptochart.CryptoChart
 import com.example.myfinancialdash.databinding.ActivityCryptoBinding
-import com.example.myfinancialdash.databinding.ActivityMainBinding
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.CandleData
 import com.github.mikephil.charting.data.CandleDataSet
 import com.github.mikephil.charting.data.CandleEntry
-import com.kt.gigagenie.geniesdk.GenieSdk
 import com.kt.gigagenie.geniesdk.GenieSdkEventListener
 import com.kt.gigagenie.geniesdk.data.model.Response
 import com.kt.gigagenie.geniesdk.service.VoiceService
@@ -32,9 +28,10 @@ import kotlinx.coroutines.*
 class CryptoActivity : FragmentActivity() {
 
     val binding by lazy { ActivityCryptoBinding.inflate(layoutInflater) }
-    val activity = MainActivity()
+    
     private var jobSearch: Job? = null
     private var jobDashboard: Job? =null
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root )
@@ -139,16 +136,9 @@ class CryptoActivity : FragmentActivity() {
 
         binding.searchCrpyto.setOnClickListener {
             jobSearch?.cancel()
+            val searchName = binding.editCrypto.text.toString()
+            var koreanName = searchName
 
-            val search_name = binding.editCrypto.text.toString()
-            var korean_name = ""
-            if(search_name == "a") {
-                korean_name = "비트코인"
-            } else if (search_name == "b") {
-                korean_name = "이더리움"
-            } else {
-                korean_name = search_name
-            }
             val retrofitCryptoSearch = RetrofitInstance_Crypto
             var searchMarket = ""
             jobSearch = CoroutineScope(Dispatchers.IO).launch {
@@ -161,10 +151,10 @@ class CryptoActivity : FragmentActivity() {
                     var isTrue = 0
                     if (cryptoSearchBody != null) {
                         for (i in cryptoSearchBody) {
-                            if (i.korean_name == korean_name && i.market.contains("KRW")) {
+                            if (i.korean_name == koreanName && i.market.contains("KRW")) {
                                 println(i.market)
                                 searchMarket = i.market
-                                korean_name = i.korean_name
+                                koreanName = i.korean_name
                                 isTrue = 1
                             } else {
                                 // 여기에 정보가 없으면 메세지를 띄우고 해당 코루틴을 스톱을 시키면 되지아느까?
@@ -195,7 +185,7 @@ class CryptoActivity : FragmentActivity() {
                         // 3. 세부정보 가져와 표에 뿌리기
                         // 여기 부분이 무한루프가 돌아야됨. 재 검색 버튼을 누르거나, 화면이 넘어갈때 초기화.
                         runOnUiThread {
-                            binding.cryptoName.text = korean_name
+                            binding.cryptoName.text = koreanName
                         }
                         var count = 0
                         // 3-1. 표에 뿌리기
@@ -266,7 +256,7 @@ class CryptoActivity : FragmentActivity() {
                         } else if (resultTest.contains("종료") || resultTest.contains("꺼줘")){
                             finish()
                         } else if(resultTest.contains("검색")){
-                            resultTest = resultTest.split("검색").get(0).trim()
+                            resultTest = resultTest.split("검색")[0].trim()
                             binding.editCrypto.setText(resultTest)
                             binding.searchCrpyto.callOnClick()
                         } else {
@@ -284,7 +274,7 @@ class CryptoActivity : FragmentActivity() {
     }
 
     // 차트 초기화 함수
-    fun initChart() {
+    private fun initChart() {
         binding.apply {
             priceChart.setMaxVisibleValueCount(200)
             priceChart.setPinchZoom(false)
@@ -319,7 +309,7 @@ class CryptoActivity : FragmentActivity() {
     }
 
     // 차트데이터 세팅 함수
-    fun setChartData(candles: CryptoChart) {
+    private fun setChartData(candles: CryptoChart) {
         val priceEntries = ArrayList<CandleEntry>()
         var count = 0
         for (candle in candles) {
