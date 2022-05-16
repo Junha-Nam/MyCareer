@@ -5,10 +5,17 @@
       <map>
         <entry key="..\:/Users/User/AndroidStudioProjects/MyCareer/app/src/main/res/drawable/background_color.xml" value="0.18" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MyCareer/app/src/main/res/drawable/default_background.xml" value="0.2255" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/MyCareer/app/src/main/res/drawable/ic_baseline.xml" value="0.2" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/MyCareer/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.367" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MyCareer/app/src/main/res/drawable/index_status.xml" value="0.1955" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/MyCareer/app/src/main/res/drawable/index_status_left.xml" value="0.1965" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MyCareer/app/src/main/res/drawable/test_rectangle.xml" value="0.26" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/MyCareer/app/src/main/res/font/custom_font_family.xml" value="0.13177083333333334" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/MyCareer/app/src/main/res/font/font.xml" value="0.37567567567567567" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MyCareer/app/src/main/res/layout/activity_crypto.xml" value="0.1" />
-        <entry key="..\:/Users/User/AndroidStudioProjects/MyCareer/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/MyCareer/app/src/main/res/layout/activity_main.xml" value="0.5401987353206865" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/MyCareer/app/src/main/res/layout/activity_main2.xml" value="0.67" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/MyCareer/app/src/main/res/layout/activity_main_bk.xml" value="0.15961199294532627" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MyFinancialDash/app/src/main/res/layout/activity_crypto.xml" value="0.25" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MyFinancialDash/app/src/main/res/layout/activity_details.xml" value="0.17806484295845998" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MyFinancialDash/app/src/main/res/layout/activity_main.xml" value="0.26498422712933756" />

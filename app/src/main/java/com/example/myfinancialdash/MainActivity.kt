@@ -9,6 +9,7 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentActivity
 import com.example.myfinancialdash.api.*
 import com.example.myfinancialdash.data.korstockchart.KorStockChart
@@ -91,13 +92,13 @@ class MainActivity : FragmentActivity() {
                                 "KOSPI" -> {
                                     runOnUiThread {
                                         binding.kospiIndex.text = i.closePrice
-                                        binding.kospiRate.text = i.fluctuationsRatio
+                                        binding.kospiRate.text = i.fluctuationsRatio + "%"
                                     }
                                 }
                                 "KOSDAQ" -> {
                                     runOnUiThread {
                                         binding.kosdaqIndex.text = i.closePrice
-                                        binding.kosdaqRate.text = i.fluctuationsRatio
+                                        binding.kosdaqRate.text = i.fluctuationsRatio + "%"
                                     }
 
                                 }
@@ -128,19 +129,19 @@ class MainActivity : FragmentActivity() {
                                 ".DJI" -> {
                                     runOnUiThread {
                                         binding.dowPrice.text = i.closePrice
-                                        binding.dowRate.text = i.fluctuationsRatio
+                                        binding.dowRate.text = i.fluctuationsRatio + "%"
                                     }
                                 }
                                 ".IXIC" -> {
                                     runOnUiThread {
                                         binding.NasdaqPrice.text = i.closePrice
-                                        binding.NasdaqRate.text = i.fluctuationsRatio
+                                        binding.NasdaqRate.text = i.fluctuationsRatio + "%"
                                     }
                                 }
                                 ".INX" -> {
                                     runOnUiThread {
                                         binding.snp500Price.text = i.closePrice
-                                        binding.snp500Rate.text = i.fluctuationsRatio
+                                        binding.snp500Rate.text = i.fluctuationsRatio + "%"
                                     }
                                 }
                             }
@@ -155,7 +156,7 @@ class MainActivity : FragmentActivity() {
                             if (i.symbolCode == "USD") {
                                 runOnUiThread {
                                     binding.dollarPrice.text = i.closePrice
-                                    binding.dollarRate.text = i.fluctuationsRatio
+                                    binding.dollarRate.text = i.fluctuationsRatio + "%"
                                 }
                                 break
                             }
@@ -167,7 +168,7 @@ class MainActivity : FragmentActivity() {
                             if (i.reutersCode == "US10YT=RR") {
                                 runOnUiThread {
                                     binding.bondPrice.text = i.closePrice
-                                    binding.bondRate.text = i.fluctuationsRatio
+                                    binding.bondRate.text = i.fluctuationsRatio + "%"
                                 }
                                 break
                             }
@@ -246,6 +247,7 @@ class MainActivity : FragmentActivity() {
                     } else {
                         // 세부정보 가져오기
                         //
+
                         if (nation == "대한민국") {
                             //한국 차트
                             val korStockChart = retrofitInstanceKorStockChart.api.getKorChart(reutersCode)
@@ -276,7 +278,7 @@ class MainActivity : FragmentActivity() {
                                     binding.stockPrice.text =
                                         korStockDetailClose?.closePrice.toString()
                                     binding.stockPercent.text =
-                                        korStockDetailClose?.fluctuationsRatio.toString()
+                                        korStockDetailClose?.fluctuationsRatio.toString() + "%"
                                     binding.openingPrice.text =
                                         korStockDetailInfos?.get(1)?.value.toString()
                                     binding.dividend.text =
@@ -289,8 +291,8 @@ class MainActivity : FragmentActivity() {
                                         korStockDetailInfos?.get(3)?.value.toString()
                                     binding.lowest52Price.text =
                                         korStockDetailInfos?.get(9)?.value.toString()
-                                    binding.prevPrice.text =
-                                        korStockDetailInfos?.get(0)?.value.toString()
+                                    //binding.prevPrice.text =
+                                    //    korStockDetailInfos?.get(0)?.value.toString()
                                     binding.pbr.text =
                                         korStockDetailInfos?.get(14)?.value.toString()
                                     binding.per.text =
@@ -331,7 +333,7 @@ class MainActivity : FragmentActivity() {
                                     binding.stockPrice.text =
                                         usdStockDetailBody?.closePrice.toString()
                                     binding.stockPercent.text =
-                                        usdStockDetailBody?.fluctuationsRatio.toString()
+                                        usdStockDetailBody?.fluctuationsRatio.toString() + "%"
                                     binding.openingPrice.text =
                                         usdStockDetailInfos?.get(1)?.value.toString()
                                     binding.dividend.text =
@@ -344,8 +346,8 @@ class MainActivity : FragmentActivity() {
                                         usdStockDetailInfos?.get(3)?.value.toString()
                                     binding.lowest52Price.text =
                                         usdStockDetailInfos?.get(9)?.value.toString()
-                                    binding.prevPrice.text =
-                                        usdStockDetailInfos?.get(0)?.value.toString()
+                               //     binding.prevPrice.text =
+                               //         usdStockDetailInfos?.get(0)?.value.toString()
                                     binding.pbr.text =
                                         usdStockDetailInfos?.get(12)?.value.toString()
                                     binding.per.text =
@@ -439,12 +441,14 @@ class MainActivity : FragmentActivity() {
             priceChart.setMaxVisibleValueCount(200)
             priceChart.setPinchZoom(false)
             priceChart.setDrawGridBackground(false)
+            priceChart.description.isEnabled = false
+
             // x축 설정
             priceChart.xAxis.apply {
                 textColor = Color.TRANSPARENT
                 position = XAxis.XAxisPosition.BOTTOM
                 // 세로선 표시 여부 설정
-                this.setDrawGridLines(true)
+                this.setDrawGridLines(false)
                 axisLineColor = Color.rgb(50, 59, 76)
                 gridColor = Color.rgb(50, 59, 76)
             }
@@ -456,9 +460,9 @@ class MainActivity : FragmentActivity() {
             // 오른쪽 y축 설정
             priceChart.axisRight.apply {
                 setLabelCount(7, false)
-                textColor = Color.WHITE
+                textColor = Color.BLACK
                 // 가로선 표시 여부 설정
-                setDrawGridLines(true)
+                setDrawGridLines(false)
                 // 차트의 오른쪽 테두리 라인 설정
                 setDrawAxisLine(true)
                 axisLineColor = Color.rgb(50, 59, 76)

@@ -16,4 +16,11 @@
     <!-- Error messages -->
     <string name="error_fragment_message">An error occurred</string>
     <string name="dismiss_error">Dismiss</string>
+
+    <!-- Stock Dashboard -->
+    <string name="stock_title">Stock Dashboard</string>
+    <string name="stock_hint">StockName</string>
+    <string name="stock_button">Genie</string>
+    <string name="blank">     </string>
+    <string name="start_price">시가</string>
 </resources>
