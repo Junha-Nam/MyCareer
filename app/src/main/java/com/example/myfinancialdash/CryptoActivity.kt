@@ -23,6 +23,10 @@ import com.kt.gigagenie.geniesdk.GenieSdkEventListener
 import com.kt.gigagenie.geniesdk.data.model.Response
 import com.kt.gigagenie.geniesdk.service.VoiceService
 import kotlinx.coroutines.*
+import java.math.RoundingMode
+import java.text.DecimalFormat
+import kotlin.math.round
+import kotlin.math.roundToInt
 
 
 class CryptoActivity : FragmentActivity() {
@@ -39,6 +43,9 @@ class CryptoActivity : FragmentActivity() {
         // 여기는 우측 대시보드. 즉, 실시간으로 계속 새로고침? 갱신 이 되어야 하는 곳이야. 
         var countTest = 0
         val retrofitDashboard = RetrofitInstance_Crypto
+
+        val df = DecimalFormat("#.##")
+        df.roundingMode = RoundingMode.DOWN
 
         jobDashboard = CoroutineScope(Dispatchers.IO).launch {
             try {
@@ -97,32 +104,32 @@ class CryptoActivity : FragmentActivity() {
 
                     //price와 rate를 뿌려준다.
                     runOnUiThread {
-                        binding.krwBtcPrice.text = cryptoKorBitBody?.get(0)?.trade_price.toString()
+                        binding.krwBtcPrice.text = toDoubleFormat(cryptoKorBitBody?.get(0)?.trade_price.toString().toDouble())
                         binding.krwBtcRate.text =
-                            cryptoKorBitBody?.get(0)?.signed_change_rate.toString()
-                        binding.krwEthPrice.text = cryptoKorEthBody?.get(0)?.trade_price.toString()
+                            df.format(cryptoKorBitBody?.get(0)?.signed_change_rate?.times(100))+"%"
+                        binding.krwEthPrice.text = toDoubleFormat(cryptoKorEthBody?.get(0)?.trade_price.toString().toDouble())
                         binding.krwEthRate.text =
-                            cryptoKorEthBody?.get(0)?.signed_change_rate.toString()
-                        binding.krwDogPrice.text = cryptoKorDogBody?.get(0)?.trade_price.toString()
+                            df.format(cryptoKorEthBody?.get(0)?.signed_change_rate?.times(100))+"%"
+                        binding.krwDogPrice.text = toDoubleFormat(cryptoKorDogBody?.get(0)?.trade_price.toString().toDouble())
                         binding.krwDogRate.text =
-                            cryptoKorDogBody?.get(0)?.signed_change_rate.toString()
+                            df.format(cryptoKorDogBody?.get(0)?.signed_change_rate?.times(100))+"%"
 
-                        binding.usdBtcPrice.text = cryptoUsdBitBody?.get(0)?.trade_price.toString()
+                        binding.usdBtcPrice.text = toDoubleFormat(cryptoUsdBitBody?.get(0)?.trade_price.toString().toDouble())
                         binding.usdBtcRate.text =
-                            cryptoUsdBitBody?.get(0)?.signed_change_rate.toString()
-                        binding.usdEthPrice.text = cryptoUsdEthBody?.get(0)?.trade_price.toString()
+                                    df.format(cryptoUsdBitBody?.get(0)?.signed_change_rate?.times(100))+"%"
+                        binding.usdEthPrice.text = toDoubleFormat(cryptoUsdEthBody?.get(0)?.trade_price.toString().toDouble())
                         binding.usdEthRate.text =
-                            cryptoUsdEthBody?.get(0)?.signed_change_rate.toString()
-                        binding.usdDogPrice.text = cryptoUsdDogBody?.get(0)?.trade_price.toString()
+                                    df.format(cryptoUsdEthBody?.get(0)?.signed_change_rate?.times(100))+"%"
+                        binding.usdDogPrice.text = toDoubleFormat(cryptoUsdDogBody?.get(0)?.trade_price.toString().toDouble())
                         binding.usdDogRate.text =
-                            cryptoUsdDogBody?.get(0)?.signed_change_rate.toString()
+                                    df.format(cryptoUsdDogBody?.get(0)?.signed_change_rate?.times(100))+"%"
                     }
 
                     countTest += 1
 
                     //CryptoData().cryptoIndex(retrofitDashboard)
 
-                    delay(3000)
+                    delay(1000)
                 }
 
 
@@ -197,30 +204,30 @@ class CryptoActivity : FragmentActivity() {
                             runOnUiThread {
                                 // UI변경 부분을 입력하자
                                 binding.cryptoPrice.text =
-                                    cryptoDetailBody?.get(0)?.trade_price.toString()
+                                    toDoubleFormat(cryptoDetailBody?.get(0)?.trade_price.toString().toDouble())
                                 binding.cryptoPercent.text =
-                                    cryptoDetailBody?.get(0)?.signed_change_rate.toString()
+                                    df.format(cryptoDetailBody?.get(0)?.signed_change_rate?.times(100))+"%"
 
                                 binding.openingPrice.text =
-                                    cryptoDetailBody?.get(0)?.opening_price.toString()
+                                    toDoubleFormat(cryptoDetailBody?.get(0)?.opening_price.toString().toDouble())
                                 binding.highest52Date.text =
                                     cryptoDetailBody?.get(0)?.highest_52_week_date.toString()
                                 binding.highPrice.text =
-                                    cryptoDetailBody?.get(0)?.high_price.toString()
+                                    toDoubleFormat(cryptoDetailBody?.get(0)?.high_price.toString().toDouble())
                                 binding.highest52Price.text =
-                                    cryptoDetailBody?.get(0)?.highest_52_week_price.toString()
+                                    toDoubleFormat(cryptoDetailBody?.get(0)?.highest_52_week_price.toString().toDouble())
                                 binding.lowPrice.text =
-                                    cryptoDetailBody?.get(0)?.low_price.toString()
+                                    toDoubleFormat(cryptoDetailBody?.get(0)?.low_price.toString().toDouble())
                                 binding.lowest52Date.text =
                                     cryptoDetailBody?.get(0)?.lowest_52_week_date.toString()
                                 binding.prevPrice.text =
-                                    cryptoDetailBody?.get(0)?.prev_closing_price.toString()
+                                    toDoubleFormat(cryptoDetailBody?.get(0)?.prev_closing_price.toString().toDouble())
                                 binding.lowest52Price.text =
-                                    cryptoDetailBody?.get(0)?.lowest_52_week_price.toString()
+                                    toDoubleFormat(cryptoDetailBody?.get(0)?.lowest_52_week_price.toString().toDouble())
                             }
 
                             count += 1
-                            delay(3000)
+                            delay(1000)
 
                         }
                     }
@@ -254,7 +261,10 @@ class CryptoActivity : FragmentActivity() {
                         if(resultTest.contains("화면")) {
                             binding.buttonStock.callOnClick()
                         } else if (resultTest.contains("종료") || resultTest.contains("꺼줘")){
+                            jobDashboard?.cancel()
+                            jobSearch?.cancel()
                             finish()
+
                         } else if(resultTest.contains("검색")){
                             resultTest = resultTest.split("검색")[0].trim()
                             binding.editCrypto.setText(resultTest)
@@ -279,12 +289,13 @@ class CryptoActivity : FragmentActivity() {
             priceChart.setMaxVisibleValueCount(200)
             priceChart.setPinchZoom(false)
             priceChart.setDrawGridBackground(false)
+            priceChart.description.isEnabled = false
             // x축 설정
             priceChart.xAxis.apply {
                 textColor = Color.TRANSPARENT
                 position = XAxis.XAxisPosition.BOTTOM
                 // 세로선 표시 여부 설정
-                this.setDrawGridLines(true)
+                this.setDrawGridLines(false)
                 axisLineColor = Color.rgb(50, 59, 76)
                 gridColor = Color.rgb(50, 59, 76)
             }
@@ -296,9 +307,9 @@ class CryptoActivity : FragmentActivity() {
             // 오른쪽 y축 설정
             priceChart.axisRight.apply {
                 setLabelCount(7, false)
-                textColor = Color.WHITE
+                textColor = Color.BLACK
                 // 가로선 표시 여부 설정
-                setDrawGridLines(true)
+                setDrawGridLines(false)
                 // 차트의 오른쪽 테두리 라인 설정
                 setDrawAxisLine(true)
                 axisLineColor = Color.rgb(50, 59, 76)
@@ -311,7 +322,7 @@ class CryptoActivity : FragmentActivity() {
     // 차트데이터 세팅 함수
     private fun setChartData(candles: CryptoChart) {
         val priceEntries = ArrayList<CandleEntry>()
-        var count = 0
+        var count = candles.size
         for (candle in candles) {
             // 캔들 차트 entry 생성
             priceEntries.add(
@@ -323,8 +334,9 @@ class CryptoActivity : FragmentActivity() {
                     candle.trade_price.toFloat()
                 )
             )
-            count+=1
+            count-=1
         }
+        priceEntries.reverse()
 
         val priceDataSet = CandleDataSet(priceEntries, "").apply {
             axisDependency = YAxis.AxisDependency.LEFT
@@ -348,6 +360,22 @@ class CryptoActivity : FragmentActivity() {
             this.data = CandleData(priceDataSet)
             invalidate()
         }
+    }
+
+    private fun toDoubleFormat(num: Double): String {
+        var df: DecimalFormat?
+        if(num >=100 && num <= 999.9) {
+            df = DecimalFormat("000.0")
+        } else if(num >=10 && num <= 99.9) {
+            df = DecimalFormat("00.00")
+        } else if(num >=1 && num <= 9.9) {
+            df = DecimalFormat("0.000")
+        } else if(num <1) {
+            df = DecimalFormat("0.00000")
+        } else {
+            df = DecimalFormat("###,###,###")
+        }
+        return df.format(num)
     }
 
 

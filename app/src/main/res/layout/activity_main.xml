@@ -100,6 +100,8 @@
         android:layout_marginTop="10dp"
         android:weightSum="11">
 
+
+
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -154,7 +156,7 @@
                         android:background="#000000" />
 
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:layout_marginLeft="5dp"
@@ -667,7 +669,7 @@
                             android:textColor="#000000"
                             android:textStyle="bold"
                             android:layout_weight="2"
-                            android:gravity="center_vertical"
+                            android:gravity="center"
                             android:layout_marginStart="3dp"
                             android:text="test"/>
                         <TextView
@@ -756,9 +758,9 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:textColor="#000000"
-                            android:layout_weight="1"
+                            android:layout_weight="2"
                             android:textStyle="normal"
-                            android:gravity="center_vertical"
+                            android:gravity="center"
                             android:layout_marginStart="3dp"
                             android:text="SnP500"/>
                         <TextView
@@ -768,7 +770,7 @@
                             android:textColor="#000000"
                             android:textStyle="bold"
                             android:layout_weight="2"
-                            android:gravity="center_vertical"
+                            android:gravity="center"
                             android:layout_marginStart="3dp"
                             android:text="test"/>
                         <TextView
@@ -777,7 +779,7 @@
                             android:layout_height="match_parent"
                             android:textColor="#000000"
                             android:textStyle="bold"
-                            android:layout_weight="2"
+                            android:layout_weight="1"
                             android:gravity="center_vertical"
                             android:layout_marginStart="3dp"
                             android:text="test"/>
@@ -806,9 +808,9 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:textColor="#000000"
-                            android:layout_weight="1"
+                            android:layout_weight="2"
                             android:textStyle="normal"
-                            android:gravity="center_vertical"
+                            android:gravity="center"
                             android:layout_marginStart="3dp"
                             android:text="Nasdaq"/>
                         <TextView
@@ -818,7 +820,7 @@
                             android:textColor="#000000"
                             android:textStyle="bold"
                             android:layout_weight="2"
-                            android:gravity="center_vertical"
+                            android:gravity="center"
                             android:layout_marginStart="3dp"
                             android:text="test"/>
                         <TextView
@@ -827,7 +829,7 @@
                             android:layout_height="match_parent"
                             android:textColor="#000000"
                             android:textStyle="bold"
-                            android:layout_weight="2"
+                            android:layout_weight="1"
                             android:gravity="center_vertical"
                             android:layout_marginStart="3dp"
                             android:text="test"/>
@@ -856,9 +858,9 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:textColor="#000000"
-                            android:layout_weight="1"
+                            android:layout_weight="2"
                             android:textStyle="normal"
-                            android:gravity="center_vertical"
+                            android:gravity="center"
                             android:layout_marginStart="3dp"
                             android:text="다우존스"/>
                         <TextView
@@ -868,7 +870,7 @@
                             android:textColor="#000000"
                             android:textStyle="bold"
                             android:layout_weight="2"
-                            android:gravity="center_vertical"
+                            android:gravity="center"
                             android:layout_marginStart="3dp"
                             android:text="test"/>
                         <TextView
@@ -877,7 +879,7 @@
                             android:layout_height="match_parent"
                             android:textColor="#000000"
                             android:textStyle="bold"
-                            android:layout_weight="2"
+                            android:layout_weight="1"
                             android:gravity="center_vertical"
                             android:layout_marginStart="3dp"
                             android:text="test"/>
@@ -906,9 +908,9 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:textColor="#000000"
-                            android:layout_weight="1"
+                            android:layout_weight="2"
                             android:textStyle="normal"
-                            android:gravity="center_vertical"
+                            android:gravity="center"
                             android:layout_marginStart="3dp"
                             android:text="환율(원/달러)"/>
                         <TextView
@@ -918,7 +920,7 @@
                             android:textColor="#000000"
                             android:textStyle="bold"
                             android:layout_weight="2"
-                            android:gravity="center_vertical"
+                            android:gravity="center"
                             android:layout_marginStart="3dp"
                             android:text="test"/>
                         <TextView
@@ -927,7 +929,7 @@
                             android:layout_height="match_parent"
                             android:textColor="#000000"
                             android:textStyle="bold"
-                            android:layout_weight="2"
+                            android:layout_weight="1"
                             android:gravity="center_vertical"
                             android:layout_marginStart="3dp"
                             android:text="test"/>
@@ -956,11 +958,11 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:textColor="#000000"
-                            android:layout_weight="1"
+                            android:layout_weight="2"
                             android:textStyle="normal"
-                            android:gravity="center_vertical"
+                            android:gravity="center"
                             android:layout_marginStart="3dp"
-                            android:text="rmafl"/>
+                            android:text="미국10년금리"/>
                         <TextView
                             android:id="@+id/bond_price"
                             android:layout_width="0dp"
@@ -968,7 +970,7 @@
                             android:textColor="#000000"
                             android:textStyle="bold"
                             android:layout_weight="2"
-                            android:gravity="center_vertical"
+                            android:gravity="center"
                             android:layout_marginStart="3dp"
                             android:text="test"/>
                         <TextView
@@ -977,7 +979,7 @@
                             android:layout_height="match_parent"
                             android:textColor="#000000"
                             android:textStyle="bold"
-                            android:layout_weight="2"
+                            android:layout_weight="1"
                             android:gravity="center_vertical"
                             android:layout_marginStart="3dp"
                             android:text="test"/>

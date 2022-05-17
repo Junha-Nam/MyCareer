@@ -175,7 +175,7 @@ class MainActivity : FragmentActivity() {
                         }
                     }
 
-                    delay(2000)
+                    delay(1000)
                 }
                     //
 
@@ -301,7 +301,7 @@ class MainActivity : FragmentActivity() {
                                         korStockDetailInfos?.get(11)?.value.toString()
                                 }
                                 count += 1
-                                delay(3000)
+                                delay(1000)
 
                             }
                         } else {
@@ -356,7 +356,7 @@ class MainActivity : FragmentActivity() {
                                         usdStockDetailInfos?.get(11)?.value.toString()
                                 }
                                 count += 1
-                                delay(3000)
+                                delay(1000)
 
                             }
 
@@ -400,6 +400,8 @@ class MainActivity : FragmentActivity() {
                         if(resultTest.contains("화면")) {
                             binding.buttonCrypto.callOnClick()
                         } else if (resultTest.contains("종료") || resultTest.contains("꺼줘")){
+                            jobDashboard?.cancel()
+                            jobSearch?.cancel()
                             finish()
                         } else if(resultTest.contains("검색")){
                             resultTest = resultTest.split("검색")[0].replace(" ","")
