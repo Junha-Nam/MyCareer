@@ -8,7 +8,8 @@ import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface IndexAPI {
+interface
+IndexAPI {
 
     @GET("domestic/index/KOSPI%2CKOSDAQ") //우리는 headline news만 가져올것이기 때문에 엔드포인트를 v2/top-headlines로 설정해줍니다.
     suspend fun getKorIndex(

@@ -208,6 +208,7 @@ class RetrofitInstance_StockSearch() {
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build()
+
         }
 
         val api by lazy{
@@ -215,3 +216,4 @@ class RetrofitInstance_StockSearch() {
         }
     }
 }
+

@@ -5,18 +5,6 @@
         <fulfillment urlTemplate="yourcustomscheme://yourcustomhost/B-StartApp">
         </fulfillment>
     </action>
-    <action intentName="ShowMainMenu">
-        <fulfillment urlTemplate="yourcustomscheme://yourcustomhost/ShowMainMenu">
-        </fulfillment>
-    </action>
-    <action intentName="ShowPayment">
-        <fulfillment urlTemplate="yourcustomscheme://yourcustomhost/ShowPayment">
-        </fulfillment>
-    </action>
-    <action intentName="ShowAppinfo">
-        <fulfillment urlTemplate="yourcustomscheme://yourcustomhost/ShowAppinfo">
-        </fulfillment>
-    </action>
 
 
 <!--    <action intentName="DETAIL">-->

@@ -24,6 +24,8 @@ import com.kt.gigagenie.geniesdk.GenieSdkEventListener
 import com.kt.gigagenie.geniesdk.data.model.Response
 import com.kt.gigagenie.geniesdk.service.VoiceService
 import kotlinx.coroutines.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class MainActivity : FragmentActivity() {
@@ -209,7 +211,7 @@ class MainActivity : FragmentActivity() {
         binding.searchStock.setOnClickListener{
             jobSearch?.cancel()
             // 1. 검색을 한다. 한국 미국 양쪽에서
-            val searchName = binding.editStock.text.toString()
+            val searchName = binding.editStock.text.toString().uppercase()
             var koreanName = searchName
 
             // 2. 검색결과가 없거나 두개 이상이면 올바르게 검색해달라고 얘기하고 종료
@@ -413,7 +415,8 @@ class MainActivity : FragmentActivity() {
                         }
 
                     } else {
-                        Toast.makeText(applicationContext,"다시 음성인식 해주세요", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(applicationContext,result.resultCode.toString(), Toast.LENGTH_SHORT).show()
+                        //Toast.makeText(applicationContext,"다시 음성인식 해주세요", Toast.LENGTH_SHORT).show()
                     }
 
                 }
@@ -434,6 +437,19 @@ class MainActivity : FragmentActivity() {
 
 
 
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+
+        // example of appInfo: {NE-XXX:YYY}
+        val appInfo = intent?.getStringExtra("appInfo")
+
+        // example of uri: yourcustomscheme://yourcustomhost/B-StartApp
+        val uri = intent?.data
+
+        // example of path: /B-StartApp
+        val path = uri?.path
     }
 
 
